@@ -16,31 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trainers`
+-- Table structure for table `move_entries`
 --
 
-DROP TABLE IF EXISTS `trainers`;
+DROP TABLE IF EXISTS `move_entries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trainers` (
-  `tid` int NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(45) NOT NULL,
-  `lastName` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `dateOfBirth` datetime NOT NULL,
-  PRIMARY KEY (`tid`)
+CREATE TABLE `move_entries` (
+  `mid` int NOT NULL AUTO_INCREMENT,
+  `pokemon` int NOT NULL,
+  `move_id` int NOT NULL,
+  PRIMARY KEY (`mid`),
+  KEY `move_id_idx` (`move_id`),
+  KEY `pokemon_idx` (`pokemon`),
+  CONSTRAINT `move_id` FOREIGN KEY (`move_id`) REFERENCES `moves` (`mid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pokemon` FOREIGN KEY (`pokemon`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trainers`
+-- Dumping data for table `move_entries`
 --
 
-LOCK TABLES `trainers` WRITE;
-/*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
+LOCK TABLES `move_entries` WRITE;
+/*!40000 ALTER TABLE `move_entries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `move_entries` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-14 21:45:01
+-- Dump completed on 2021-11-14 21:45:00
