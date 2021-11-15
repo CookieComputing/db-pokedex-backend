@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: pokedex
+-- Host: 127.0.0.1    Database: pokedex
 -- ------------------------------------------------------
--- Server version	8.0.26
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +30,11 @@ CREATE TABLE `pokemon` (
   `gender` varchar(45) NOT NULL,
   PRIMARY KEY (`pid`),
   KEY `gender_idx` (`gender`),
-  CONSTRAINT `gender` FOREIGN KEY (`gender`) REFERENCES `genders` (`gender`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `pokemon_to_team` (`team`),
+  KEY `pokemon_to_pokemon_info` (`info`),
+  CONSTRAINT `gender` FOREIGN KEY (`gender`) REFERENCES `genders` (`gender`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pokemon_to_pokemon_info` FOREIGN KEY (`info`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pokemon_to_team` FOREIGN KEY (`team`) REFERENCES `teams` (`teid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-14 13:06:03
+-- Dump completed on 2021-11-14 21:45:00

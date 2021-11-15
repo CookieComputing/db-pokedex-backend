@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: pokedex
+-- Host: 127.0.0.1    Database: pokedex
 -- ------------------------------------------------------
--- Server version	8.0.26
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,13 +27,10 @@ CREATE TABLE `moves` (
   `name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
-  `pokemon` int NOT NULL,
   `move_type` varchar(45) NOT NULL,
   PRIMARY KEY (`mid`),
-  KEY `pokemon_idx` (`pokemon`),
   KEY `move_type_idx` (`move_type`),
-  CONSTRAINT `move_type` FOREIGN KEY (`move_type`) REFERENCES `move_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pokemon` FOREIGN KEY (`pokemon`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `move_type` FOREIGN KEY (`move_type`) REFERENCES `move_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-14 13:06:11
+-- Dump completed on 2021-11-14 21:45:02
