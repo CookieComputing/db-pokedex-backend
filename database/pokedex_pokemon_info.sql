@@ -26,12 +26,10 @@ CREATE TABLE `pokemon_info` (
   `national_num` int NOT NULL,
   `evolved_state_pkid` int DEFAULT NULL,
   `devolved_state_pkid` int DEFAULT NULL,
-  `pokemon_id` int DEFAULT NULL,
   `name` varchar(45) NOT NULL,
   `photo_url` varchar(255) NOT NULL,
-  `description` varchar(45) NOT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`national_num`),
-  KEY `pokemon_idx` (`pokemon_id`),
   KEY `devolved_state_idx` (`devolved_state_pkid`),
   KEY `evolved_state_idx` (`evolved_state_pkid`),
   CONSTRAINT `devolved_state` FOREIGN KEY (`devolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -57,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15  8:45:11
+-- Dump completed on 2021-11-15 20:26:04
