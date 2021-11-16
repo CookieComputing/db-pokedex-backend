@@ -26,10 +26,11 @@ CREATE TABLE `moves` (
   `mid` int NOT NULL,
   `name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
-  `type` varchar(45) NOT NULL,
+  `element_type` varchar(45) NOT NULL,
   `move_type` varchar(45) NOT NULL,
   PRIMARY KEY (`mid`),
   KEY `move_type_idx` (`move_type`),
+  KEY `element_type_idx` (`element_type`),
   CONSTRAINT `move_type` FOREIGN KEY (`move_type`) REFERENCES `move_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:04:57
+-- Dump completed on 2021-11-15 21:37:24
