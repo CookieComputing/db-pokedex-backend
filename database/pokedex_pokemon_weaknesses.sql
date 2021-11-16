@@ -38,6 +38,7 @@ CREATE TABLE `pokemon_weaknesses` (
 
 LOCK TABLES `pokemon_weaknesses` WRITE;
 /*!40000 ALTER TABLE `pokemon_weaknesses` DISABLE KEYS */;
+INSERT INTO `pokemon_weaknesses` VALUES ('GROUND',25),('GROUND',26),('GROUND',172);
 /*!40000 ALTER TABLE `pokemon_weaknesses` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:04:58
+-- Dump completed on 2021-11-16 12:38:52
