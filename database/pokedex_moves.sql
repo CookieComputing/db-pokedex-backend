@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `moves`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `moves` (
-  `mid` int NOT NULL,
+  `mid` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `description` varchar(45) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `element_type` varchar(45) NOT NULL,
   `move_type` varchar(45) NOT NULL,
   PRIMARY KEY (`mid`),
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:37:24
+-- Dump completed on 2021-11-15 21:50:25
