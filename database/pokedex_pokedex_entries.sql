@@ -31,7 +31,7 @@ CREATE TABLE `pokedex_entries` (
   KEY `pokedex_idx` (`pokedex`),
   CONSTRAINT `pokedex` FOREIGN KEY (`pokedex`) REFERENCES `pokedexes` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pokemon_info` FOREIGN KEY (`pokemon_info`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `pokedex_entries` (
 
 LOCK TABLES `pokedex_entries` WRITE;
 /*!40000 ALTER TABLE `pokedex_entries` DISABLE KEYS */;
+INSERT INTO `pokedex_entries` VALUES (1,1,25),(2,2,26);
 /*!40000 ALTER TABLE `pokedex_entries` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:04:57
+-- Dump completed on 2021-11-16 12:38:50

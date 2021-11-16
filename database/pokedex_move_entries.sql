@@ -31,7 +31,7 @@ CREATE TABLE `move_entries` (
   KEY `pokemon_idx` (`pokemon`),
   CONSTRAINT `move_id` FOREIGN KEY (`move_id`) REFERENCES `moves` (`mid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pokemon` FOREIGN KEY (`pokemon`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `move_entries` (
 
 LOCK TABLES `move_entries` WRITE;
 /*!40000 ALTER TABLE `move_entries` DISABLE KEYS */;
+INSERT INTO `move_entries` VALUES (1,25,1),(2,26,1),(3,26,2);
 /*!40000 ALTER TABLE `move_entries` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:04:58
+-- Dump completed on 2021-11-16 12:38:52

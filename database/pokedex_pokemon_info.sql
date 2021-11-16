@@ -43,6 +43,7 @@ CREATE TABLE `pokemon_info` (
 
 LOCK TABLES `pokemon_info` WRITE;
 /*!40000 ALTER TABLE `pokemon_info` DISABLE KEYS */;
+INSERT INTO `pokemon_info` VALUES (25,172,26,'Pikachu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png','Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy'),(26,25,NULL,'Raichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/026.png','Its long tail serves as a ground to protect itself from its own high-voltage power.'),(172,NULL,25,'Pichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/172.png','Despite its small size, it can zap even adult humans. However, if it does so, it also surprises itself.');
 /*!40000 ALTER TABLE `pokemon_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 21:04:59
+-- Dump completed on 2021-11-16 12:38:51
