@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `pokemon_types`;
 CREATE TABLE `pokemon_types` (
   `type` varchar(45) NOT NULL,
   `pkid` int NOT NULL,
-  PRIMARY KEY (`type`),
+  PRIMARY KEY (`type`,`pkid`),
   KEY `pkid_idx` (`pkid`),
   CONSTRAINT `pkid` FOREIGN KEY (`pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `element_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 20:26:03
+-- Dump completed on 2021-11-15 21:04:58

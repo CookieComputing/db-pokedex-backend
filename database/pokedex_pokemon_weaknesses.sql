@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `pokemon_weaknesses`;
 CREATE TABLE `pokemon_weaknesses` (
   `weakness` varchar(45) NOT NULL,
   `pkinfo_id` int NOT NULL,
-  PRIMARY KEY (`weakness`),
+  PRIMARY KEY (`weakness`,`pkinfo_id`),
   KEY `pkid_idx` (`pkinfo_id`),
   CONSTRAINT `pkinfo_id` FOREIGN KEY (`pkinfo_id`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `weakness` FOREIGN KEY (`weakness`) REFERENCES `element_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 20:26:03
+-- Dump completed on 2021-11-15 21:04:58
