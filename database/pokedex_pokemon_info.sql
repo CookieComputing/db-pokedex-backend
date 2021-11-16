@@ -28,7 +28,7 @@ CREATE TABLE `pokemon_info` (
   `devolved_state_pkid` int DEFAULT NULL,
   `name` varchar(45) NOT NULL,
   `photo_url` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`national_num`),
   KEY `devolved_state_idx` (`devolved_state_pkid`),
   KEY `evolved_state_idx` (`evolved_state_pkid`),
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-15 20:19:05
+-- Dump completed on 2021-11-15 20:26:04
