@@ -76,6 +76,18 @@ def get_pokemon_in_region(region: Union[int, str]) -> List[dict]:
                 "Error code when requesting species data: {}, URL attempted: {}".format(response.status_code, species_url))
         
         species = json.loads(response.text)
+
+        # filtering out a few fields which have multiple languages
+        def is_eng(x):
+            return x['language']['name'] == 'en'
+        
+        def l_f(arr):
+            return list(filter(is_eng, arr))
+
+        species['names'] = l_f(species['names'])
+        species['genera'] = l_f(species['genera'])
+        species['flavor_text_entries'] = l_f(species['flavor_text_entries'])
+
         specimens.append(species)
     return specimens
 
