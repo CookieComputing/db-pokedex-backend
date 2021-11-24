@@ -16,5 +16,4 @@ class Trainers(models.Model):
         return "{} {}".format(self.first_name, self.last_name)
     
     class Meta:
-        managed = False
         db_table = 'trainers'

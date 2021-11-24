@@ -4,7 +4,7 @@ Views for trainer related modules. These can be thought of as DAOs for the model
 
 from django.http import HttpRequest, HttpResponse, Http404
 from django.core import serializers
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from datetime import datetime
 from trainers.models import Trainers
 import json
@@ -56,7 +56,7 @@ def create_trainer(request: HttpRequest) -> HttpResponse:
     return HttpResponse(to_json_one(new_trainer))
 
 def find_all_trainers(_: HttpRequest) -> HttpResponse:
-    trainers = get_list_or_404(Trainers)
+    trainers = Trainers.objects.all()
     return HttpResponse(to_json(trainers))
 
 def find_trainer_by_id(_: HttpRequest, trainer_id: int) -> HttpResponse:
