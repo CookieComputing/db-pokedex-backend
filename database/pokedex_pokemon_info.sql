@@ -32,8 +32,8 @@ CREATE TABLE `pokemon_info` (
   PRIMARY KEY (`national_num`),
   KEY `devolved_state_idx` (`devolved_state_pkid`),
   KEY `evolved_state_idx` (`evolved_state_pkid`),
-  CONSTRAINT `devolved_state` FOREIGN KEY (`devolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `evolved_state` FOREIGN KEY (`evolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `devolved_state` FOREIGN KEY (`devolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE,
+  CONSTRAINT `evolved_state` FOREIGN KEY (`evolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-23 23:24:02
+-- Dump completed on 2021-11-24 16:07:55
