@@ -21,6 +21,20 @@ DATABASE_HOST=<yourDBhost, e.g. localhost>
 - Open up a terminal and run `make run` in the root directory
 - To verify that the server is connected, visit the localhost page they provided in the output of your terminal, e.g. `http://127.0.0.1:8000/`
 
+## Trainer API
+To access trainer data, you can use the `host:8000/trainers/` HTTP endpoint.
+
+- Getting all trainers: `host:8000/trainers/`
+- Getting a trainer by id: `host:8000/trainers/<id:int>/`
+- Updating a trainer: `host:8000/trainers/update/<id:int>/`
+- Creating a trainer: `host:8000/trainers/create/`
+- Deleting a trainer: `host:8000/trainers/delete/<id:int>/`
+
+For updating or creating, be sure to provide a JSON object mapping the trainer's keys to its values.
+Updating a trainer's fields only requires that you provide the fields you want to change, instead of all fields.
+
+Make sure your datetime payload follows the `'%Y-%m-%dT%H:%M:%SZ'` format, otherwise the server will reject your payload.
+
 # Authors
 - Natalie Hsu
 - Kevin Hui
