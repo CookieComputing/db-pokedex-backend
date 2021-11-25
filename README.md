@@ -37,9 +37,9 @@ Make sure your datetime payload follows the `'%Y-%m-%dT%H:%M:%SZ'` format, other
 
 ## Pokemon Info API
 Pokemon Info is an entry that contains the pokedex information about a specific pokemon species. To access this information, you can use
-the `host:8000/pokemon_info/` HTTP endpoint.
+the `host:8000/pokemon/pokemon_info/` HTTP endpoint.
 
-- Getting all pokemon info: `host:8000/pokemon_info/`
+- Getting all pokemon info: `host:8000/pokemon/pokemon_info/`
 - Getting pokemon info by id: `host:8000/pokemon/pokemon_info/<id:int>/`
 - Updating pokemon info: `host:8000/pokemon/pokemon_info/update/<id:int>/`
 - Deleting pokemon info: `host:8000/pokemon/pokemon_info/delete/<id:int>/`
