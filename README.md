@@ -35,6 +35,23 @@ Updating a trainer's fields only requires that you provide the fields you want t
 
 Make sure your datetime payload follows the `'%Y-%m-%dT%H:%M:%SZ'` format, otherwise the server will reject your payload.
 
+## Pokemon Info API
+Pokemon Info is an entry that contains the pokedex information about a specific pokemon species. To access this information, you can use
+the `host:8000/pokemon_info/` HTTP endpoint.
+
+- Getting all pokemon info: `host:8000/pokemon_info/`
+- Getting pokemon info by id: `host:8000/pokemon/pokemon_info/<id:int>/`
+- Updating pokemon info: `host:8000/pokemon/pokemon_info/update/<id:int>/`
+- Deleting pokemon info: `host:8000/pokemon/pokemon_info/delete/<id:int>/`
+- Creating pokemon info entries: `host:8000/pokemon/pokemon_info/create/`
+- Creating a series of evoluions of pokemon: `host:8000/pokemon/pokemon_info/create/series/`
+
+For updating or creating, be sure to provide a JSON object mapping the pokemon info's keys to its values.
+Updating a pokemon info's fields only requires that you provide the fields you want to change, instead of all fields.
+
+When creating a series of pokemon in an evolution chain, supply the attributes of each entry in a JSON array, where
+the first entry is the most basic stage of the pokemon, and the last entry is the most evolved stage of the pokemon.
+
 # Authors
 - Natalie Hsu
 - Kevin Hui
