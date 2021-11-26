@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from pokemon.models import PokemonInfo, Moves
+from pokemon.models import PokemonInfo
 from utils.serialize import to_json, to_json_one, from_json
 from utils.http import assert_post
 from typing import Dict, Any
