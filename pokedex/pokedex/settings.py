@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pokemon.apps.PokemonConfig',
     'trainers.apps.TrainersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
