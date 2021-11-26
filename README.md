@@ -52,6 +52,19 @@ Updating a pokemon info's fields only requires that you provide the fields you w
 When creating a series of pokemon in an evolution chain, supply the attributes of each entry in a JSON array, where
 the first entry is the most basic stage of the pokemon, and the last entry is the most evolved stage of the pokemon.
 
+## Move API
+Moves are the moves that a pokemon can use in battle. To access this information, you can use the 
+`host:8000/pokemon/move` HTTP endpoint.
+
+- Getting all moves: `host:8000/pokemon/moves/`
+- Getting a move by id: `host:8000/pokemon/moves/<id:int>/`
+- Updating a move: `host:8000/pokemon/moves/update/<id:int>/`
+- Deleting a move: `host:8000/pokemon/moves/delete/<id:int>/`
+- Creating a move: `host:8000/pokemon/moves/create/`
+
+For updating or creating, be sure to provide a JSON object mapping the move's keys to its values.
+Updating a move's fields only requires that you provide the fields you want to change, instead of all fields.
+
 # Authors
 - Natalie Hsu
 - Kevin Hui

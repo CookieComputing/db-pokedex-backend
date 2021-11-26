@@ -4,6 +4,7 @@ Views/DAOs for Pokemon related tables
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from pokemon.models import PokemonInfo, Moves
 from pokemon.models import PokemonInfo
 from utils.serialize import to_json, to_json_one, from_json
 from utils.http import assert_post
@@ -97,4 +98,51 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
 
     pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
     pokemon_info.delete()
+    return HttpResponse(json.dumps({}))
+
+def find_all_moves(_: HttpRequest) -> HttpResponse:
+    moves = Moves.objects.all()
+    return HttpResponse(to_json(moves))
+
+def find_move_by_id(_: HttpRequest, move_id: int) -> HttpResponse:
+    move = get_object_or_404(Moves, pk=move_id)
+    return HttpResponse(to_json_one(move))
+
+@csrf_exempt
+def create_move(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+
+    new_move = Moves(
+        name=post_req['name'],
+        description=post_req['description'],
+        element_type=post_req['element_type'],
+        move_type=post_req['move_type']
+    )
+    new_move.full_clean()
+    new_move.save()
+    return HttpResponse(to_json_one(new_move))
+
+@csrf_exempt
+def update_move(request: HttpRequest, move_id: int) -> HttpResponse:
+    assert_post(request)
+    move = get_object_or_404(Moves, pk=move_id)
+    post_req = from_json(request)
+
+    move.name = post_req.get('name', move.name)
+    move.description = post_req.get('description', move.description)
+    move.element_type = post_req.get('element_type', move.element_type)
+    move.move_type = post_req.get('move_type', move.move_type)
+
+    move.full_clean()
+    move.save()
+    return HttpResponse(to_json_one(move))
+
+@csrf_exempt
+def delete_move(request: HttpRequest, move_id: int) -> HttpResponse:
+    # Even if there is no data, request should still be a POST
+    assert_post(request)
+
+    move = get_object_or_404(Moves, pk=move_id)
+    move.delete()
     return HttpResponse(json.dumps({}))
