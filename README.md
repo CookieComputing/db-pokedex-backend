@@ -37,8 +37,20 @@ To access trainer data, you can use the `host:8000/trainers/` HTTP endpoint.
 - Creating a trainer: `host:8000/trainers/create/`
 - Deleting a trainer: `host:8000/trainers/delete/<id:int>/`
 
-For updating or creating, be sure to provide a JSON object mapping the trainer's keys to its values.
+For updating or creating, be sure to provide a JSON object in the body of your request mapping the trainer's keys to its values.
 Updating a trainer's fields only requires that you provide the fields you want to change, instead of all fields.
+
+JSON payload example:
+```json
+{
+    "first_name": "kevin",
+    "last_name": "hui",
+    "username": "khui",
+    "password": "mypass",
+    "email": "hui.k@husky.neu.edu",
+    "date_of_birth": "1987-05-22T00:00:00Z"
+}
+```
 
 Make sure your datetime payload follows the `'%Y-%m-%dT%H:%M:%SZ'` format, otherwise the server will reject your payload.
 
@@ -59,6 +71,41 @@ Updating a pokemon info's fields only requires that you provide the fields you w
 When creating a series of pokemon in an evolution chain, supply the attributes of each entry in a JSON array, where
 the first entry is the most basic stage of the pokemon, and the last entry is the most evolved stage of the pokemon.
 
+JSON payload for creating a PokemonInfo example:
+```json
+{
+    "national_num": 29,
+    "name": "pikachu",
+    "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    "description": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "evolved_state_pkid": 25,
+    "devolved_state_pkid": 26
+}
+```
+
+An example of creating a series of PokemonInfo:
+```
+[
+    {
+        "national_num": 172,
+        "name": "Pichu",
+        "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/172.png",
+        "description": "Despite its small size, it can zap even adult humans. However, if it does so, it also surprises itself."
+    },
+    {
+        "national_num": 25,
+        "name": "Pikachu",
+        "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+        "description": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy."
+    },
+    {
+        "national_num": 26,
+        "name": "Raichu",
+        "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/026.png",
+        "description": "Its long tail serves as a ground to protect itself from its own high-voltage power."
+    }
+]
+```
 ## Move API
 Moves are the moves that a pokemon can use in battle. To access this information, you can use the 
 `host:8000/pokemon/move` HTTP endpoint.
@@ -71,6 +118,16 @@ Moves are the moves that a pokemon can use in battle. To access this information
 
 For updating or creating, be sure to provide a JSON object mapping the move's keys to its values.
 Updating a move's fields only requires that you provide the fields you want to change, instead of all fields.
+
+JSON payload example:
+```
+{
+    "name": "Scratch",
+    "description": "A Normal-type attack. Sharp claws are used to inflict damage on the target.",
+    "move_type": "physical",
+    "element_type": "normal"
+}
+```
 
 # Authors
 - Natalie Hsu
