@@ -5,7 +5,7 @@ Backend for CS 3200 - Database Design. Contains code for querying PokeAPI, as we
 ## Onboarding
 
 - You'll need to ensure `python3` is installed on your systems. If you're on MacOS, the command is `brew install python`. If you're on some *nix system, the command is probably `sudo apt-get install python3`
-- Create `pokedex/.env`. This file will be used for storing various configuration values you may need to start the server. Here's an example of a file:
+- Create `pokedex/pokedex/.env`. This file will be used for storing various configuration values you may need to start the server. Here's an example of a file:
 ```
 DATABASE_USER=<yourDBuser, e.g. root>
 DATABASE_PASSWORD=<yourDBpassword, e.g. pass>
@@ -14,12 +14,17 @@ DATABASE_HOST=<yourDBhost, e.g. localhost>
 ```
 - Create a virtual environment to remove any dependencies your machine may have, i.e. `python3 -m venv env`
 - Run `source env/bin/activate` in the main directory to enable your virtual environment
-- Run `pip install requirements.txt` in the main directory to install python requirements
+- Run `pip install -r requirements.txt` in the main directory to install python requirements
+- You may end up encountering a few build errors thanks to missing dependencies, feel free to look them up on the internet to debug the build process
 
 ## Starting the backend server
 - Ensure you're in the virtual environment with the requirements already installed
+- You'll need to clean up your existing `pokedex` table if you have one in your MySQL server. Drop all of the tables in your schema.
+- Since Django is managing the database, you'll need to run `python3 manage.py migrate` to migrate all existing changes to the database. This will give you a fresh `pokedex` database managed by Django.
 - Open up a terminal and run `make run` in the root directory
 - To verify that the server is connected, visit the localhost page they provided in the output of your terminal, e.g. `http://127.0.0.1:8000/`
+
+If you're connecting via WSL and need to connect to the host, you'll need to grant access for a MySQL user to connect to the server. You can follow [this](https://stackoverflow.com/a/1559992) link to set up the privileges, but be sure to adjust the user's IP following [this](https://stackoverflow.com/a/8348560).
 
 ## Trainer API
 To access trainer data, you can use the `host:8000/trainers/` HTTP endpoint.
