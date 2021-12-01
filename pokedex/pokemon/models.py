@@ -35,6 +35,7 @@ class ElementTypes(models.TextChoices):
     DARK = "dark", _("Dark")
     STEEL = "steel", _("Steel")
     FAIRY = "fairy", _("Fairy")
+    SHADOW = "shadow", _("Shadow") # Shadow is not an official Pokemon type, but does appear in some editions
 
     class Meta:
         db_table = 'element_types'
