@@ -129,6 +129,16 @@ JSON payload example:
 }
 ```
 
+## Generating Authentic Pokemon Data
+We query PokeAPI's interface in order to extract legitimate data about pokemon. To set up your server with legitimate pokemon information, run `make build` in another terminal while the server is running.
+
+## Generating sample data for all tables
+We provide another Makefile command, `make test-build`, which will provide fake information about trainers, pokemon, and other classes relevant to the database.
+
+## Clearing the database
+To clean up your database, simply run `make clean` in another terminal while the server is running.
+
+
 # Authors
 - Natalie Hsu
 - Kevin Hui
