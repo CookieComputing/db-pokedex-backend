@@ -84,3 +84,29 @@ class Region(models.Model):
 
     class Meta:
         db_table = 'regions'
+
+class PokemonType(models.Model):
+    """
+    A many-to-one mapping for a pokemon's type, which can be multiple.
+    """
+    # Sadly, Django does not have support for multiple primary keys, thus we enforce
+    # a unique constraint instead
+    type = models.CharField(max_length=45, choices=ElementTypes.choices)
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = 'pokemon_types'
+        unique_together = (('type', 'pokemon_info'),)
+
+class PokemonWeakness(models.Model):
+    """
+    A many-to-one mapping for a pokemon's weaknesses, which can be multiple.
+    """
+    # Sadly, Django does not have support for multiple primary keys, thus we enforce
+    # a unique constraint instead
+    weakness = models.CharField(max_length=45, choices=ElementTypes.choices)
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = 'pokemon_weaknesses'
+        unique_together = (('weakness', 'pokemon_info'),)
