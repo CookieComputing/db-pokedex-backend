@@ -6,7 +6,6 @@ import the data.
 from pokeapi import api
 
 import environ
-import os
 import requests
 import posixpath
 

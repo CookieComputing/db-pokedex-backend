@@ -15,7 +15,7 @@ POKEMON_API_PREFIX = "pokemon/"
 POKEMON_MOVE_PREFIX = "move/"
 REGION_PREFIX = "region/"
 REGIONS = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar"]
-logger = logging.getLogger()
+logger = logging.getLogger("pokeapi")
 
 def get_pokemon_info(national_num: Union[int, str]) -> dict:
     """
