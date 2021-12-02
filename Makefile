@@ -8,7 +8,7 @@ build:
 
 .PHONY: clean
 clean:
-	echo "stub"
+	python3 pokedex/manage.py flush 
 
 .PHONY: test-build
 test-build:
