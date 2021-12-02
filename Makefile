@@ -12,4 +12,4 @@ clean:
 
 .PHONY: test-build
 test-build:
-	echo "stub"
+	python3 scripts/populate_test_data.py
