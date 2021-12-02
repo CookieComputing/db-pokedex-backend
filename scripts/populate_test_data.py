@@ -5,8 +5,6 @@ This script assumes that:
   - There is a backend server running at DB_HOST:8000
   - The backend server can get accessed by its HTTP API endpoints
 """
-import requests
-from typing import Dict
 import common
 
 def main():
@@ -30,7 +28,7 @@ def main():
     }
     trainer_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.CREATE])
     for trainer in [ash, gary]:
-        assert_successful_create(trainer_path, trainer)
+        common.assert_successful_create(trainer_path, trainer)
 
     # Create sample moves
     scratch = {
@@ -48,7 +46,7 @@ def main():
     }
     move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.MOVE_PREFIX, common.CREATE])
     for move in [scratch, fire_punch]:
-        assert_successful_create(move_path, move)
+        common.assert_successful_create(move_path, move)
 
     # Create sample pokemon info
     # Sample pokemon (non-series)
@@ -59,7 +57,7 @@ def main():
         "description": "Commonly found near mountain trails and the like. If you step on one by accident, it gets angry.",
     }
     pokemon_info_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE])
-    assert_successful_create(pokemon_info_path, geodude)
+    common.assert_successful_create(pokemon_info_path, geodude)
 
     # pikachu series
     pikachu_series = [
@@ -83,12 +81,7 @@ def main():
         }
     ]
     pokemon_info_series_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE, common.SERIES])
-    assert_successful_create(pokemon_info_series_path, pikachu_series)
-
-def assert_successful_create(url: str, payload: Dict[str, str]):
-    response = requests.post(url, json=payload)
-    if response.status_code != 200:
-        raise ValueError("Could not create test data, error code: {}\npayload data: {}".format(response.status_code, payload))
+    common.assert_successful_create(pokemon_info_series_path, pikachu_series)
 
 if __name__ == "__main__":
     main()

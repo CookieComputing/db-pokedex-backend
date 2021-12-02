@@ -4,7 +4,7 @@ run:
 
 .PHONY: build
 build:
-	echo "stub"
+	python3 scripts/download_data.py
 
 .PHONY: clean
 clean:

@@ -1,8 +1,6 @@
 import environ
-import os
-import requests
 import posixpath
-from django.http import HttpResponse
+import requests
 from typing import Dict, List
 
 env = environ.Env()
@@ -27,3 +25,9 @@ def format_path(base: str, components: List[str]) -> str:
     for component in components:
         url = posixpath.join(url, component)
     return url + "/" if url[-1] != "/" else url
+    
+def assert_successful_create(url: str, payload: Dict[str, str]):
+    """Assert that the create POST request was successful, otherwise raise an Error"""
+    response = requests.post(url, json=payload)
+    if response.status_code != 200:
+        raise ValueError("Could not create test data, error code: {}\npayload data: {}".format(response.status_code, payload))
