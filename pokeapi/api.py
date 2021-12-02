@@ -95,7 +95,7 @@ def get_pokemon_in_region(region: Union[int, str]) -> List[dict]:
     return specimens
 
 
-def get_all_moves() -> Dict[str, str]:
+def get_all_moves() -> List[Dict[str, str]]:
     """
     Retrieves move information for all moves in PokeAPI's move API. The resulting list is a
     dictionary formatted to the backend's expectations. Note that this will take a while
