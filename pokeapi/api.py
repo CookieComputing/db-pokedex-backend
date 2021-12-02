@@ -16,7 +16,6 @@ POKEMON_MOVE_PREFIX = "move/"
 REGION_PREFIX = "region/"
 REGIONS = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar"]
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
 
 def get_pokemon_info(national_num: Union[int, str]) -> dict:
     """
@@ -125,7 +124,7 @@ def _get_all_move_links() -> List[str]:
     while response['next']:
         for move in response['results']:
             links.append(move['url'])
-        logger.info("Currently have {} moves".format(len(links)))
+        logger.debug("Currently have {} moves".format(len(links)))
         response = query_data(response['next'])
     return links
 
