@@ -1,0 +1,29 @@
+import environ
+import os
+import requests
+import posixpath
+from django.http import HttpResponse
+from typing import Dict, List
+
+env = environ.Env()
+environ.Env.read_env("pokedex/pokedex/.env")
+
+# A set of constants that might be useful to HTTP clients
+DB_HOST = env('DATABASE_HOST')
+TRAINER_PREFIX = "trainers"
+POKEMON_PREFIX = "pokemon"
+POKEMON_INFO_PREFIX = "pokemon_info"
+MOVE_PREFIX = "moves"
+CREATE = "create"
+SERIES = "series"
+
+
+def format_path(base: str, components: List[str]) -> str:
+    """
+    Formats a base and http components with the HTTP protocol and the expected port.
+    """
+    url = "http://{}:8000/".format(base)
+
+    for component in components:
+        url = posixpath.join(url, component)
+    return url + "/" if url[-1] != "/" else url
