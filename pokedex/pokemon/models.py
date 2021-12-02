@@ -57,3 +57,24 @@ class Moves(models.Model):
 
     class Meta:
         db_table = 'moves'
+
+class Gender(models.Model):
+    """
+    Pokemon genders.
+    """
+    MALE = "male", _("Male")
+    FEMALE = "female", _("Female")
+    UNKNOWN = "unknown", _("Unknown")
+
+class Region(models.Model):
+    """
+    The regions that pokemon and trainers reside in.
+    """
+    KANTO = "kanto", _("Kanto")
+    JOHTO = "johto", _("Johto")
+    HOENN = "hoenn", _("Hoenn")
+    SINNOH = "sinnoh", _("Sinnoh")
+    UNOVA = "unova", _("Unova")
+    KALOS = "kalos", _("Kalos")
+    ALOLA = "alola", _("Alola")
+    GALAR = "galar", _("Galar")
