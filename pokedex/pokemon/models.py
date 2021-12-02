@@ -66,6 +66,9 @@ class Gender(models.Model):
     FEMALE = "female", _("Female")
     UNKNOWN = "unknown", _("Unknown")
 
+    class Meta:
+        db_table = 'genders'
+
 class Region(models.Model):
     """
     The regions that pokemon and trainers reside in.
@@ -78,3 +81,6 @@ class Region(models.Model):
     KALOS = "kalos", _("Kalos")
     ALOLA = "alola", _("Alola")
     GALAR = "galar", _("Galar")
+
+    class Meta:
+        db_table = 'regions'
