@@ -84,7 +84,7 @@ JSON payload for creating a PokemonInfo example:
 ```
 
 An example of creating a series of PokemonInfo:
-```
+```json
 [
     {
         "national_num": 172,
@@ -120,7 +120,7 @@ For updating or creating, be sure to provide a JSON object mapping the move's ke
 Updating a move's fields only requires that you provide the fields you want to change, instead of all fields.
 
 JSON payload example:
-```
+```json
 {
     "name": "Scratch",
     "description": "A Normal-type attack. Sharp claws are used to inflict damage on the target.",
