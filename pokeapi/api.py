@@ -2,10 +2,9 @@
 Scraper to scan the PokeAPI for information needed to populate our own database with entries about PokemonInfo.
 All Pokemon data can be found at https://pokeapi.co/
 """
-import json
 import requests
 from urllib.parse import urljoin
-from typing import Union, List, Dict
+from typing import Union, List, Dict, Any
 import posixpath
 import logging
 import unidecode
@@ -16,6 +15,70 @@ POKEMON_MOVE_PREFIX = "move/"
 REGION_PREFIX = "region/"
 REGIONS = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar"]
 logger = logging.getLogger("pokeapi")
+
+def get_all_pokemon_info() -> List[Dict[str, Any]]:
+    """
+    Retrieves all pokemon information from PokeAPI.
+    """
+    logger.info("Retrieving all pokemon data.")
+    api_query = urljoin(POKEAPI_URL_PREFIX, POKEMON_API_PREFIX)
+
+    def add_pokemon_url(query):
+        results = []
+        logging.debug("Pokemon url query: {}".format(query))
+        response = requests.get(query)
+        if response.status_code != 200:
+            raise ValueError(
+                "Error code when requesting ALL Pokemon data: {}, URL attempted: {}".format(response.status_code, api_query))
+        data = response.json()
+
+        for entry in data['results']:
+            results.append(get_pokemon_info(entry['name']))
+
+        if data['next']:
+            logger.debug("Additional pokemon in next page detected. Querying...")
+            results += add_pokemon_url(data['next'])
+        else:
+            logger.info("Finished querying pokemon.")
+        return results
+
+    def get_photo_url(sprites_dict):
+        if 'other' in sprites_dict:
+            other = sprites_dict['other']
+            if 'official-artwork' in other and other['official-artwork']['front_default']:
+                return other['official-artwork']['front_default']
+            elif 'dream_world' in other and other['dream_world']['front_default']:
+                return other['dream_world']['front_default']
+            elif 'home' in other and other['home']['front_default']:
+                return other['home']['front_default']
+            else:
+                return sprites_dict['front_default']
+        return sprites_dict['front_default']
+
+    def process_pokemon_data(pokemon_entry):
+        # Processes the pokemon data for specific attributes we care about
+        species = _get_pokemon_species(pokemon_entry['species']['url'])
+    
+        eng_desc = _filter_eng(species['flavor_text_entries'])
+        if eng_desc:
+            # We just want some description, not all generation descriptions
+            eng_desc = eng_desc[0]
+            eng_desc['flavor_text'] = eng_desc['flavor_text']
+            eng_desc = unidecode.unidecode(eng_desc['flavor_text']).replace('\n', ' ').replace('\x0c', ' ')
+        else:
+            eng_desc = "This pokemon does not have an english description."
+
+        new_pokemon_data = {
+            "national_num": pokemon_entry['id'],
+            "name": pokemon_entry['name'],
+            "description": eng_desc,
+            "photo_url": get_photo_url(pokemon_entry['sprites'])
+        }
+        return new_pokemon_data
+
+    logger.info("Querying API for pokemon data")
+    pokemon_raw_data = add_pokemon_url(api_query)
+    return [process_pokemon_data(pokemon) for pokemon in pokemon_raw_data]
 
 def get_pokemon_info(national_num: Union[int, str]) -> dict:
     """
@@ -30,7 +93,7 @@ def get_pokemon_info(national_num: Union[int, str]) -> dict:
     if response.status_code != 200:
         raise ValueError(
             "Error code when requesting Pokemon data: {}, URL attempted: {}".format(response.status_code, api_query))
-    return json.loads(response.text)
+    return response.json()
 
 def get_region(region: Union[int, str]) -> dict:
     """
@@ -45,7 +108,7 @@ def get_region(region: Union[int, str]) -> dict:
     if response.status_code != 200:
         raise ValueError(
             "Error code when requesting Region data: {}, URL attempted: {}".format(response.status_code, api_query))
-    return json.loads(response.text)
+    return response.json()
 
 def get_pokemon_in_region(region: Union[int, str]) -> List[dict]:
     """
@@ -67,33 +130,15 @@ def get_pokemon_in_region(region: Union[int, str]) -> List[dict]:
         raise ValueError(
             "Error code when requesting pokedex data: {}, URL attempted: {}".format(response.status_code, pokedex_url))
     
-    pokedex_entries = json.loads(response.text)
+    pokedex_entries = response.json()
     pokemon_entries = pokedex_entries['pokemon_entries']
 
     specimens = []
     for entry in pokemon_entries:
         species_url = entry['pokemon_species']['url']
-        response = requests.get(species_url)
-        if response.status_code != 200:
-            raise ValueError(
-                "Error code when requesting species data: {}, URL attempted: {}".format(response.status_code, species_url))
-        
-        species = json.loads(response.text)
-
-        # filtering out a few fields which have multiple languages
-        def is_eng(x):
-            return x['language']['name'] == 'en'
-        
-        def l_f(arr):
-            return list(filter(is_eng, arr))
-
-        species['names'] = l_f(species['names'])
-        species['genera'] = l_f(species['genera'])
-        species['flavor_text_entries'] = l_f(species['flavor_text_entries'])
-
+        species = _get_pokemon_species(species_url)
         specimens.append(species)
     return specimens
-
 
 def get_all_moves() -> List[Dict[str, str]]:
     """
@@ -116,7 +161,7 @@ def _get_all_move_links() -> List[str]:
         if response.status_code != 200:
             raise ValueError(
                 "Error code when requesting move data: {}, URL attempted: {}".format(response.status_code, url))
-        return json.loads(response.text)
+        return response.json()
     response = query_data(api_query)
 
     count = response['count']
@@ -138,7 +183,7 @@ def _get_move(move_url: str) -> Dict[str, str]:
             raise ValueError(
                 "Error code when requesting move data: {}, URL attempted: {}".format(response.status_code, move_url))
     
-    move_dict = json.loads(response.text)
+    move_dict = response.json()
 
     result = {}
     result['name'] = [move_name_obj['name'] for move_name_obj in move_dict['names'] if move_name_obj['language']['name'] == 'en'][0]
@@ -157,3 +202,25 @@ def _get_move(move_url: str) -> Dict[str, str]:
         # with unicode encoding
         result['description'] = unidecode.unidecode(result['description']).replace('\n', ' ')
     return result
+
+def _get_pokemon_species(species_url: str) -> Dict[str, str]:
+    response = requests.get(species_url)
+    if response.status_code != 200:
+        raise ValueError(
+            "Error code when requesting species data: {}, URL attempted: {}".format(response.status_code, species_url))
+    
+    species = response.json()
+
+    species['names'] = _filter_eng(species['names'])
+    species['genera'] = _filter_eng(species['genera'])
+    species['flavor_text_entries'] = _filter_eng(species['flavor_text_entries'])
+    return species
+
+def _filter_eng(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    # filtering out a few fields which have multiple languages
+    def is_eng(x):
+        return x['language']['name'] == 'en'
+    
+    def l_f(arr):
+        return list(filter(is_eng, arr))
+    return l_f(entries)
