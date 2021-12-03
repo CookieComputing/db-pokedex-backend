@@ -19,14 +19,14 @@ DATABASE_HOST=<yourDBhost, e.g. localhost>
 
 ## Starting the backend server
 - Ensure you're in the virtual environment with the requirements already installed
-- You'll need to clean up your existing `pokedex` table if you have one in your MySQL server. Drop all of the tables in your schema.
-- Since Django is managing the database, you'll need to run `python3 manage.py migrate` in `pokedex/` to migrate all existing changes to the database. This will give you a fresh `pokedex` database managed by Django.
+- You'll need to clean up your existing `pokedex` schema if you have one in your MySQL server. Drop all of the tables in your schema.
+- Since Django is managing the database, you'll need to run `python3 manage.py migrate` in `pokedex/` to migrate all existing changes to the database. This will give you a fresh `pokedex` database managed by Django. If you do not already have a `pokedex` schema, create one and do not add any tables.
 - Open up a terminal and run `make run` in the root directory
 - To verify that the server is connected, visit the localhost page they provided in the output of your terminal, e.g. `http://127.0.0.1:8000/`
 
 If you're connecting via WSL and need to connect to the host, you'll need to grant access for a MySQL user to connect to the server. You can follow [this](https://stackoverflow.com/a/1559992) link to set up the privileges, but be sure to adjust the user's IP following [this](https://stackoverflow.com/a/8348560).
 
-- Once you verify that the initial set-up for the backend works, you can just run `make run` in the project directory to start the server whenever you want to.
+- Once you verify that the initial set-up for the backend works, you can just run `make run` in the project directory to start the server whenever you want to. Be sure to leave this terminal in the background or daemonize the command in order to ensure that the server will continue running as you perform various operations on it.
 
 ## Trainer API
 To access trainer data, you can use the `host:8000/trainers/` HTTP endpoint.
