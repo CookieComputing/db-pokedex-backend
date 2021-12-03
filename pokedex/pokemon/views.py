@@ -19,6 +19,12 @@ def find_pokemon_info_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
     pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
     return HttpResponse(to_json_one(pokemon_info))
 
+def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
+    # TODO: check this works
+    pokemon_type = pokemon_info[0][pokemon_info]
+    return HttpResponse(to_json(pokemon_type))
+
 """
 Creates a single pokemon info entry. The evolved_state and devolved_state fields
 are optional. To create a series of pokemon info entries that link to each other,
