@@ -11,7 +11,6 @@ urlpatterns = [
     path('pokemon_info/delete/<int:national_num>/', views.delete_pokemon_info, name='delete_pokemon_info'),
 
     path('pokemon_type/<int:national_num>/', views.find_pokemon_type_by_id, name='find_pokemon_type_by_id'),
-    path('pokemon_weakness/<int:national_num>/', views.find_pokemon_weakness_by_id, name='find_pokemon_weakness_by_id'),
 
     path('moves/', views.find_all_moves, name='find_all_moves'),
     path('moves/<int:move_id>/', views.find_move_by_id, name='find_move_by_id'),

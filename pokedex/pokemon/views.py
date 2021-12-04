@@ -4,7 +4,7 @@ Views/DAOs for Pokemon related tables
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from pokemon.models import PokemonType, PokemonWeakness
+from pokemon.models import PokemonType
 from pokemon.models import PokemonInfo, Moves
 from pokemon.models import PokemonInfo
 from utils.serialize import to_json, to_json_one, from_json
@@ -105,11 +105,6 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
 # ===POKEMON_TYPE===
 def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
     pokemon_type = get_object_or_404(PokemonType, pokemon_info=national_num)
-    return HttpResponse(to_json_one(pokemon_type))
-
-# ===POKEMON_WEAKNESS===
-def find_pokemon_weakness_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_type = get_object_or_404(PokemonWeakness, pokemon_info=national_num)
     return HttpResponse(to_json_one(pokemon_type))
 
 # ===MOVES===
