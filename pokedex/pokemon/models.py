@@ -58,7 +58,7 @@ class Moves(models.Model):
     class Meta:
         db_table = 'moves'
 
-class Gender(models.Model):
+class Gender(models.TextChoices):
     """
     Pokemon genders.
     """
@@ -69,7 +69,7 @@ class Gender(models.Model):
     class Meta:
         db_table = 'genders'
 
-class Region(models.Model):
+class Region(models.TextChoices):
     """
     The regions that pokemon and trainers reside in.
     """
