@@ -14,6 +14,7 @@ POKEMON_INFO_PREFIX = "pokemon_info"
 MOVE_PREFIX = "moves"
 CREATE = "create"
 SERIES = "series"
+TEAMS = "teams"
 
 
 def format_path(base: str, components: List[str]) -> str:

@@ -4,7 +4,7 @@ Views for trainer related modules. These can be thought of as DAOs for the model
 
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
-from trainers.models import Trainers
+from trainers.models import Trainers, Teams
 from utils.serialize import to_json, to_json_one, to_datetime, from_json
 from utils.http import assert_post
 import json
@@ -58,4 +58,41 @@ def delete_trainer(request: HttpRequest, trainer_id: int) -> HttpResponse:
     trainer = get_object_or_404(Trainers, pk=trainer_id)
     trainer.delete()
     return HttpResponse(json.dumps({}))
-    
+
+def find_all_teams(request: HttpRequest) -> HttpResponse:
+    teams = Teams.objects.all()
+    return HttpResponse(to_json(teams))
+
+def find_all_teams_for_trainer(request: HttpRequest, trainer_id: int) -> HttpResponse:
+    trainer_teams = Teams.objects.filter(trainer__tid=trainer_id)
+    return HttpResponse(to_json(trainer_teams))
+
+@csrf_exempt
+def create_team(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    trainer = get_object_or_404(Trainers, pk=post_req['trainer'])
+    new_team = Teams.objects.create(
+        name = post_req['name'],
+        trainer = trainer
+    )
+    return HttpResponse(to_json_one(new_team))
+
+@csrf_exempt
+def update_team(request: HttpRequest, team_id: int) -> HttpResponse:
+    assert_post(request)
+    team = get_object_or_404(Teams, pk=team_id)
+    post_req = from_json(request)
+
+    team.name = post_req.get('name', team.name)
+    team.save()
+    return HttpResponse(to_json_one(team))
+
+@csrf_exempt
+def delete_team(request: HttpRequest, team_id: int) -> HttpResponse:
+    # Even if there is no data, request should still be a POST
+    assert_post(request)
+
+    team = get_object_or_404(Teams, pk=team_id)
+    team.delete()
+    return HttpResponse(json.dumps({}))
