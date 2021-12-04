@@ -54,6 +54,27 @@ JSON payload example:
 
 Make sure your datetime payload follows the `'%Y-%m-%dT%H:%M:%SZ'` format, otherwise the server will reject your payload.
 
+## Team API
+A `Team` is a collection of `Pokemon` that a `Trainer` may use for battle. To access this information, you can use the `host:8000/trainers/teams/` HTTP endpoint.
+
+- Getting all teams: `host:8000/trainers/teams/`
+- Getting all teams for a trainer: `host:8000/trainers/teams/<id:int>/`
+- Creating a team: `host:8000/trainers/teams/create/`
+- Updating a team: `host:8000/trainers/teams/update/<id:int>/` 
+- Deleting a team: `host:8000/trainers/teams/delete/<id:int>/`
+For updating or creating, be sure to provide a JSON object mapping the team's keys to its values.
+Updating a team's fields only requires that you provide the fields you want to change, instead of all fields.
+
+You are only allowed to update a team's name, not it's trainer: To change a team's trainer, you will need to delete the team and create it under a new trainer.
+
+JSON payload for creating a Team example:
+```json
+{
+    "name": "ash's first team",
+    "trainer": 1
+}
+```
+
 ## Pokemon Info API
 Pokemon Info is an entry that contains the pokedex information about a specific pokemon species. To access this information, you can use
 the `host:8000/pokemon/pokemon_info/` HTTP endpoint.
