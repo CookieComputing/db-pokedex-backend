@@ -72,6 +72,28 @@ JSON payload for creating a Team example:
 {
     "name": "ash's first team",
     "trainer": 1
+```
+
+## Pokemon API
+Pokemon are distinct from [Pokemon Info](#pokemon-info-api): These Pokemon are individual pokemon that are owned by a trainer. PokemonInfo, however, contains information about the species of that particular Pokemon. To access this information, you can use the `host:8000/trainers/teams/pokemon/` endpoint.
+- Getting all pokemon, regardless of team: `host:8000/trainers/teams/pokemon/`
+- Getting pokemon on a team: `host:8000/trainers/teams/pokemon/<id:int>/`
+- Updating pokemon on a team: `host:8000/trainers/teams/pokemon/update/<id:int>/`
+- Creating pokemon on a team: `host:8000/trainers/teams/pokemon/create/`
+- Deleting pokemon on a team: `host:8000/trainers/teams/pokemon/delete/<id:int>/`
+
+For updating or creating, be sure to provide a JSON object mapping the pokemon's keys to its values.
+Updating a pokemon's fields only requires that you provide the fields you want to change, instead of all fields.
+
+Note that you are only allowed to update the `Pokemon`'s `gender` and `nickname`. To move it to another `Team` or associate it with another `PokemonInfo`, you'll need to delete that `Pokemon` and re-create it.
+
+JSON payload for creating a `Pokemon` example:
+```json
+{
+    "nickname": "pika",
+    "gender": "male",
+    "team": 1,
+    "pokemon_info": 25
 }
 ```
 
