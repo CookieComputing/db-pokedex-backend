@@ -4,6 +4,7 @@ Views/DAOs for Pokemon related tables
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from pokemon.models import PokemonType, PokemonWeakness
 from pokemon.models import PokemonInfo, Moves
 from pokemon.models import PokemonInfo
 from utils.serialize import to_json, to_json_one, from_json
@@ -20,10 +21,12 @@ def find_pokemon_info_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
     return HttpResponse(to_json_one(pokemon_info))
 
 def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
-    # TODO: check this works
-    pokemon_type = pokemon_info[0][pokemon_info]
-    return HttpResponse(to_json(pokemon_type))
+    pokemon_type = get_object_or_404(PokemonType, pokemon_info=national_num)
+    return HttpResponse(to_json_one(pokemon_type))
+
+def find_pokemon_weakness_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonWeakness, pokemon_info=national_num)
+    return HttpResponse(to_json_one(pokemon_type))
 
 """
 Creates a single pokemon info entry. The evolved_state and devolved_state fields
