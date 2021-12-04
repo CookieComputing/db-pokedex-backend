@@ -173,6 +173,22 @@ JSON payload example:
 }
 ```
 
+## MoveEntry API
+Move entries are a reification of the many to many relationship between `PokemonInfo` and `Moves`. If a move entry binds two rows together, that particular pokemon knows how to perform that particular move. To access this information, you can use the `host:8000/pokemon/pokemon_info/moves/` HTTP endpoint.
+
+- Getting all pokemon info - move associations: `host:8000/pokemon/pokemon_info/moves/`
+- Getting pokemon info - move association by pokemon info id: `localhost:8000/pokemon/pokemon_info/moves/<int:id>/`
+- Associate a pokemon info and a move: `host:8000/pokemon/pokemon_info/moves/associate/`
+- Deassociate a pokemon info and a move: `localhost:8000/pokemon/pokemon_info/moves/deassociate/`
+
+Assocation/Deassociation JSON payload example:
+```json
+{
+    "pokemon_info": 26,
+    "move": 2
+}
+```
+
 ## Generating Authentic Pokemon Data
 We query PokeAPI's interface in order to extract legitimate data about pokemon. To set up your server with legitimate pokemon information, run `make build` in another terminal while the server is running.
 
