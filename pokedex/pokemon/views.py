@@ -12,6 +12,7 @@ from utils.http import assert_post
 from typing import Dict, Any
 import json
 
+# ===POKEMON_INFO===
 def find_all_pokemon_info(_: HttpRequest) -> HttpResponse:
     pokemon_info = PokemonInfo.objects.all()
     return HttpResponse(to_json(pokemon_info))
@@ -19,14 +20,6 @@ def find_all_pokemon_info(_: HttpRequest) -> HttpResponse:
 def find_pokemon_info_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
     pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
     return HttpResponse(to_json_one(pokemon_info))
-
-def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_type = get_object_or_404(PokemonType, pokemon_info=national_num)
-    return HttpResponse(to_json_one(pokemon_type))
-
-def find_pokemon_weakness_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_type = get_object_or_404(PokemonWeakness, pokemon_info=national_num)
-    return HttpResponse(to_json_one(pokemon_type))
 
 """
 Creates a single pokemon info entry. The evolved_state and devolved_state fields
@@ -109,6 +102,17 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     pokemon_info.delete()
     return HttpResponse(json.dumps({}))
 
+# ===POKEMON_TYPE===
+def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonType, pokemon_info=national_num)
+    return HttpResponse(to_json_one(pokemon_type))
+
+# ===POKEMON_WEAKNESS===
+def find_pokemon_weakness_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonWeakness, pokemon_info=national_num)
+    return HttpResponse(to_json_one(pokemon_type))
+
+# ===MOVES===
 def find_all_moves(_: HttpRequest) -> HttpResponse:
     moves = Moves.objects.all()
     return HttpResponse(to_json(moves))
