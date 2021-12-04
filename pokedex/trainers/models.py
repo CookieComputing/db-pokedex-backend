@@ -17,3 +17,13 @@ class Trainers(models.Model):
     
     class Meta:
         db_table = 'trainers'
+
+class Teams(models.Model):
+    name = models.CharField(max_length=45)
+    trainer = models.ForeignKey(Trainers, models.CASCADE)
+
+    def __str__():
+        return "Trainer {} {}'s team {}".format(self.trainer.first_name, self.trainer.last_name, self.name)
+
+    class Meta:
+        db_table = 'teams'
