@@ -10,7 +10,12 @@ urlpatterns = [
     path('pokemon_info/update/<int:national_num>/', views.update_pokemon_info, name='update_pokemon_info'),
     path('pokemon_info/delete/<int:national_num>/', views.delete_pokemon_info, name='delete_pokemon_info'),
 
-    path('pokemon_type/<int:national_num>/', views.find_pokemon_type_by_id, name='find_pokemon_type_by_id'),
+    path('pokemon_type/', views.find_all_pokemon_types, name='find_all_pokemon_types'),
+    path('pokemon_type/<int:pokemon_info>/', views.find_all_pokemon_types_by_pokemon_id, name='find_all_pokemon_types_by_pokemon_id'),
+    path('pokemon_type/<int:pokemon_info>/<str:type>', views.find_pokemon_type_by_pokemon_id_and_type, name='find_pokemon_type_by_pokemon_id_and_type'),
+    path('pokemon_type/create', views.create_pokemon_type, name='create_pokemon_type'),
+    path('pokemon_type/update/<int:pokemon_info>/<str:type>', views.update_pokemon_type, name='update_pokemon_type'),
+    path('pokemon_type/delete/<int:pokemon_type>/<str:type>', views.delete_pokemon_type, name='delete_pokemon_type'),
 
     path('moves/', views.find_all_moves, name='find_all_moves'),
     path('moves/<int:move_id>/', views.find_move_by_id, name='find_move_by_id'),

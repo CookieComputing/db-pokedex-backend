@@ -11,6 +11,7 @@ DB_HOST = env('DATABASE_HOST')
 TRAINER_PREFIX = "trainers"
 POKEMON_PREFIX = "pokemon"
 POKEMON_INFO_PREFIX = "pokemon_info"
+POKEMON_TYPE_PREFIX = "pokemon_type"
 MOVE_PREFIX = "moves"
 CREATE = "create"
 SERIES = "series"

@@ -83,6 +83,27 @@ def main():
     pokemon_info_series_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE, common.SERIES])
     common.assert_successful_create(pokemon_info_series_path, pikachu_series)
 
+    # Create sample pokemon types
+    # Sample types
+    # e.g. Bulbasaur (national_num: 1) has two types: grass & poison. Pikachu is an eletric type.
+    grass_type = {
+        "type": "grass",
+        "pokemon_info": 1,
+    }
+    
+    poison_type = {
+        "type": "poison",
+        "pokemon_info": 1,
+    }
+    
+    electric_type = {
+        "type": "electric",
+        "pokemon_info": 25,
+    }
+    pokemon_types_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_TYPE_PREFIX, common.CREATE])
+    for type in [grass_type, poison_type, electric_type]:
+        common.assert_successful_create(pokemon_types_path, type)
+
     # Create sample teams for Gary and ash
     ash_team = {
         "name": "Ash's first team",

@@ -103,10 +103,50 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     return HttpResponse(json.dumps({}))
 
 # ===POKEMON_TYPE===
-def find_pokemon_type_by_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_type = get_object_or_404(PokemonType, pokemon_info=national_num)
+def find_all_pokemon_types(_: HttpRequest) -> HttpResponse:
+    pokemon_types = PokemonType.objects.all()
+    return HttpResponse(to_json(pokemon_types))
+    
+def find_all_pokemon_types_by_pokemon_id(_: HttpRequest, pokemon_info: int) -> HttpResponse:
+    pokemon_types = PokemonType.objects.all(pokemon_info=pokemon_info)
+    return HttpResponse(to_json(pokemon_types))
+
+def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+    return HttpResponse(to_json_one(pokemon_type))
+    
+def create_pokemon_type(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    type_req = from_json(request)
+    
+    new_type = PokemonType(
+        type=type_req['type'],
+        pokemon_info=type_req['pokemon_info']
+    )
+    new_type.full_clean()
+    new_type.save()
+    return HttpResponse(to_json_one(new_type))
+
+def update_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
+    assert_post(request)
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+    type_req = from_json(request)
+
+    pokemon_type.type = type_req.get('type', pokemon_type.type)
+    pokemon_type.pokemon_info = type_req.get('pokemon_info', pokemon_type.pokemon_info)
+
+    pokemon_type.full_clean()
+    pokemon_type.save()
     return HttpResponse(to_json_one(pokemon_type))
 
+def delete_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
+     # Even if there is no data, request should still be a POST
+    assert_post(request)
+
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+    pokemon_type.delete()
+    return HttpResponse(json.dumps({}))
+    
 # ===MOVES===
 def find_all_moves(_: HttpRequest) -> HttpResponse:
     moves = Moves.objects.all()
