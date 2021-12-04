@@ -83,5 +83,18 @@ def main():
     pokemon_info_series_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE, common.SERIES])
     common.assert_successful_create(pokemon_info_series_path, pikachu_series)
 
+    # Create sample teams for Gary and ash
+    ash_team = {
+        "name": "Ash's first team",
+        "trainer": 1
+    }
+    gary_team = {
+        "name": "Gary's first team",
+        "trainer": 2
+    }
+    team_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.TEAMS, common.CREATE])
+    for team in [ash_team, gary_team]:
+        common.assert_successful_create(team_path, team)
+
 if __name__ == "__main__":
     main()
