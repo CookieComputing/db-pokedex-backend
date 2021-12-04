@@ -72,6 +72,7 @@ JSON payload for creating a Team example:
 {
     "name": "ash's first team",
     "trainer": 1
+}
 ```
 
 ## Pokemon API
