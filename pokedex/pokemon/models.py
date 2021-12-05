@@ -110,3 +110,16 @@ class PokemonWeakness(models.Model):
     class Meta:
         db_table = 'pokemon_weaknesses'
         unique_together = (('weakness', 'pokemon_info'),)
+
+class MoveEntry(models.Model):
+    """
+    A reification of the many-to-many relationship between PokemonInfo and Moves
+    """
+    # Sadly, Django does not have support for multiple primary keys, thus we enforce
+    # a unique constraint instead
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
+    move = models.ForeignKey(Moves, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "move_entries"
+        unique_together = (('pokemon_info', 'move'),)

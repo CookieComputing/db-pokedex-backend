@@ -72,6 +72,7 @@ JSON payload for creating a Team example:
 {
     "name": "ash's first team",
     "trainer": 1
+}
 ```
 
 ## Pokemon API
@@ -169,6 +170,22 @@ JSON payload example:
     "description": "A Normal-type attack. Sharp claws are used to inflict damage on the target.",
     "move_type": "physical",
     "element_type": "normal"
+}
+```
+
+## MoveEntry API
+Move entries are a reification of the many to many relationship between `PokemonInfo` and `Moves`. If a move entry binds two rows together, that particular pokemon knows how to perform that particular move. To access this information, you can use the `host:8000/pokemon/pokemon_info/moves/` HTTP endpoint.
+
+- Getting all pokemon info - move associations: `host:8000/pokemon/pokemon_info/moves/`
+- Getting pokemon info - move association by pokemon info id: `localhost:8000/pokemon/pokemon_info/moves/<int:id>/`
+- Associate a pokemon info and a move: `host:8000/pokemon/pokemon_info/moves/associate/`
+- Deassociate a pokemon info and a move: `localhost:8000/pokemon/pokemon_info/moves/deassociate/`
+
+Assocation/Deassociation JSON payload example:
+```json
+{
+    "pokemon_info": 26,
+    "move": 2
 }
 ```
 

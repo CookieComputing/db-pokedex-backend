@@ -44,8 +44,16 @@ def main():
         "move_type": "physical",
         "element_type": "fire"
     }
+
+    thunder_punch = {
+        "name": "Thunder Punch",
+        "description": "An electric punch. It may paralyze.",
+        "move_type": "physical",
+        "element_type": "electric"
+    }
+
     move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.MOVE_PREFIX, common.CREATE])
-    for move in [scratch, fire_punch]:
+    for move in [scratch, fire_punch, thunder_punch]:
         common.assert_successful_create(move_path, move)
 
     # Create sample pokemon info
@@ -83,6 +91,27 @@ def main():
     pokemon_info_series_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE, common.SERIES])
     common.assert_successful_create(pokemon_info_series_path, pikachu_series)
 
+    pikachu_knows_scratch = {
+        "pokemon_info": 25,
+        "move": 1
+    }
+    geo_dude_knows_fire_punch = {
+        "pokemon_info": 74,
+        "move": 2
+    }
+    raichu_knows_scratch = {
+        "pokemon_info": 26,
+        "move": 1
+    }
+    raichu_knows_thunder_punch = {
+        "pokemon_info": 26,
+        "move": 3
+    }
+
+    pokemon_move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.MOVE_PREFIX, common.ASSOCIATE])
+    for association in [pikachu_knows_scratch, geo_dude_knows_fire_punch, raichu_knows_scratch, raichu_knows_thunder_punch]:
+        common.assert_successful_create(pokemon_move_path, association)
+    
     # Create sample teams for Gary and ash
     ash_team = {
         "name": "Ash's first team",

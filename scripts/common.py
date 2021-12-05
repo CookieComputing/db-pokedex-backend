@@ -15,6 +15,7 @@ MOVE_PREFIX = "moves"
 CREATE = "create"
 SERIES = "series"
 TEAMS = "teams"
+ASSOCIATE = "associate"
 
 
 def format_path(base: str, components: List[str]) -> str:

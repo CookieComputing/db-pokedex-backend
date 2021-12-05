@@ -4,8 +4,7 @@ Views/DAOs for Pokemon related tables
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from pokemon.models import PokemonInfo, Moves
-from pokemon.models import PokemonInfo
+from pokemon.models import PokemonInfo, Moves, MoveEntry
 from utils.serialize import to_json, to_json_one, from_json
 from utils.http import assert_post
 from typing import Dict, Any
@@ -145,4 +144,37 @@ def delete_move(request: HttpRequest, move_id: int) -> HttpResponse:
 
     move = get_object_or_404(Moves, pk=move_id)
     move.delete()
+    return HttpResponse(json.dumps({}))
+
+def find_all_pokemon_moves(_: HttpRequest) -> HttpResponse:
+    pokemon_moves = MoveEntry.objects.all()
+    return HttpResponse(to_json(pokemon_moves))
+
+def find_all_moves_by_pokemon_info_id(_: HttpRequest, poke_info_id: int) -> HttpResponse:
+    pokemon_moves = MoveEntry.objects.filter(pokemon_info__national_num=poke_info_id)
+    return HttpResponse(to_json(pokemon_moves))
+
+@csrf_exempt
+def associate_poke_info_with_move(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    poke_info = get_object_or_404(PokemonInfo, pk=post_req['pokemon_info'])
+    move = get_object_or_404(Moves, pk=post_req['move'])
+
+    move_entry = MoveEntry(
+        pokemon_info=poke_info,
+        move=move
+    )
+    move_entry.full_clean()
+    move_entry.save()
+    return HttpResponse(to_json_one(move_entry))
+
+@csrf_exempt
+def deassociate_poke_info_with_move(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    poke_info = get_object_or_404(PokemonInfo, pk=post_req['pokemon_info'])
+    move = get_object_or_404(Moves, pk=post_req['move'])
+    move_entry = get_object_or_404(MoveEntry, pokemon_info=poke_info, move=move)
+    move_entry.delete()
     return HttpResponse(json.dumps({}))
