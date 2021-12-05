@@ -96,5 +96,22 @@ def main():
     for team in [ash_team, gary_team]:
         common.assert_successful_create(team_path, team)
 
+    # Add ash's pikachu, gary's raichu
+    pikachu = {
+        "nickname": "pikapika",
+        "gender": "male",
+        "team": 1,
+        "pokemon_info": 25
+    }
+    raichu = {
+        "nickname": "raiiii",
+        "gender": "female",
+        "team": 2,
+        "pokemon_info": 26
+    }
+    pokemon_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.TEAMS, common.POKEMON_PREFIX, common.CREATE])
+    for pokemon in [pikachu, raichu]:
+        common.assert_successful_create(pokemon_path, pokemon)
+
 if __name__ == "__main__":
     main()

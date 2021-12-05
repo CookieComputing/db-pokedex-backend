@@ -13,4 +13,9 @@ urlpatterns = [
     path('teams/create/', views.create_team, name='create_team'),
     path('teams/update/<int:team_id>/', views.update_team, name='update_team'),
     path('teams/delete/<int:team_id>/', views.delete_team, name='delete_team'),
+    path('teams/pokemon/', views.find_all_pokemon, name='find_all_pokemon'),
+    path('teams/pokemon/<int:team_id>/', views.find_pokemon_by_team, name='find_pokemon_by_team'),
+    path('teams/pokemon/create/', views.create_pokemon, name='create_pokemon'),
+    path('teams/pokemon/update/<int:pokemon_id>/', views.update_pokemon, name='update_pokemon'),
+    path('teams/pokemon/delete/<int:pokemon_id>/', views.delete_pokemon, name='delete_pokemon')
 ]
