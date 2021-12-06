@@ -115,6 +115,7 @@ def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, pokemon_info: int, 
     pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
     return HttpResponse(to_json_one(pokemon_type))
     
+@csrf_exempt
 def create_pokemon_type(request: HttpRequest) -> HttpResponse:
     assert_post(request)
     type_req = from_json(request)
@@ -127,6 +128,7 @@ def create_pokemon_type(request: HttpRequest) -> HttpResponse:
     new_type.save()
     return HttpResponse(to_json_one(new_type))
 
+@csrf_exempt
 def update_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
     assert_post(request)
     pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
@@ -139,6 +141,7 @@ def update_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> H
     pokemon_type.save()
     return HttpResponse(to_json_one(pokemon_type))
 
+@csrf_exempt
 def delete_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
      # Even if there is no data, request should still be a POST
     assert_post(request)

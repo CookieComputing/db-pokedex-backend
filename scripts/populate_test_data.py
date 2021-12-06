@@ -85,23 +85,36 @@ def main():
 
     # Create sample pokemon types
     # Sample types
-    # e.g. Bulbasaur (national_num: 1) has two types: grass & poison. Pikachu is an eletric type.
-    grass_type = {
-        "type": "grass",
-        "pokemon_info": 1,
+    # e.g. Geodude (national_num: 74) has two types: rock & ground. Pikachu is an eletric type.
+    # geodude_pokemon_info = get_object_or_404(PokemonInfo, pk=74)
+    # pikachu_pokemon_info = get_object_or_404(PokemonInfo, pk=25)
+    # geodude_pokemon_info = PokemonInfo(74, "geodude", "https://assets.pokemon.com/assets/cms2/img/pokedex/full/074.png", 
+    #                                    "Commonly found near mountain trails and the like. If you step on one by accident, it gets angry.")
+    # pikachu_pokemon_info = PokemonInfo(25, "Pikachu", "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    #                                    "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.")
+    pikachu_pokemon_info = {
+            "national_num": 25,
+            "name": "Pikachu",
+            "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+            "description": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy."
+        }
+    
+    rock_type = {
+        "type": "rock",
+        "pokemon_info": geodude,
     }
     
-    poison_type = {
-        "type": "poison",
-        "pokemon_info": 1,
+    ground_type = {
+        "type": "ground",
+        "pokemon_info": geodude,
     }
     
     electric_type = {
         "type": "electric",
-        "pokemon_info": 25,
+        "pokemon_info": pikachu_pokemon_info,
     }
     pokemon_types_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_TYPE_PREFIX, common.CREATE])
-    for type in [grass_type, poison_type, electric_type]:
+    for type in [rock_type, ground_type, electric_type]:
         common.assert_successful_create(pokemon_types_path, type)
 
     # Create sample teams for Gary and ash
