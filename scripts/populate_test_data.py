@@ -86,32 +86,19 @@ def main():
     # Create sample pokemon types
     # Sample types
     # e.g. Geodude (national_num: 74) has two types: rock & ground. Pikachu is an eletric type.
-    # geodude_pokemon_info = get_object_or_404(PokemonInfo, pk=74)
-    # pikachu_pokemon_info = get_object_or_404(PokemonInfo, pk=25)
-    # geodude_pokemon_info = PokemonInfo(74, "geodude", "https://assets.pokemon.com/assets/cms2/img/pokedex/full/074.png", 
-    #                                    "Commonly found near mountain trails and the like. If you step on one by accident, it gets angry.")
-    # pikachu_pokemon_info = PokemonInfo(25, "Pikachu", "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
-    #                                    "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.")
-    pikachu_pokemon_info = {
-            "national_num": 25,
-            "name": "Pikachu",
-            "photo_url": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
-            "description": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy."
-        }
-    
     rock_type = {
         "type": "rock",
-        "pokemon_info": geodude,
+        "national_num": 74,
     }
     
     ground_type = {
         "type": "ground",
-        "pokemon_info": geodude,
+        "national_num": 74,
     }
     
     electric_type = {
         "type": "electric",
-        "pokemon_info": pikachu_pokemon_info,
+        "national_num": 25,
     }
     pokemon_types_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_TYPE_PREFIX, common.CREATE])
     for type in [rock_type, ground_type, electric_type]:

@@ -107,46 +107,48 @@ def find_all_pokemon_types(_: HttpRequest) -> HttpResponse:
     pokemon_types = PokemonType.objects.all()
     return HttpResponse(to_json(pokemon_types))
     
-def find_all_pokemon_types_by_pokemon_id(_: HttpRequest, pokemon_info: int) -> HttpResponse:
-    pokemon_types = PokemonType.objects.all(pokemon_info=pokemon_info)
+def find_all_pokemon_types_by_pokemon_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_types = PokemonType.objects.all(pokemon_info__pk=national_num)
     return HttpResponse(to_json(pokemon_types))
 
-def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
-    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, national_num: int, type: str) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
     return HttpResponse(to_json_one(pokemon_type))
     
+# The body request should include a national_num identifying which pokemoin_info we are looking at 
 @csrf_exempt
 def create_pokemon_type(request: HttpRequest) -> HttpResponse:
     assert_post(request)
     type_req = from_json(request)
     
+    pokemon_info = get_object_or_404(PokemonInfo, pk=type_req['national_num'])
+    
     new_type = PokemonType(
         type=type_req['type'],
-        pokemon_info=type_req['pokemon_info']
+        pokemon_info=pokemon_info
     )
     new_type.full_clean()
     new_type.save()
     return HttpResponse(to_json_one(new_type))
 
 @csrf_exempt
-def update_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
+def update_pokemon_type(request: HttpRequest, national_num: int, type: str) -> HttpResponse:
     assert_post(request)
-    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
     type_req = from_json(request)
-
+    
     pokemon_type.type = type_req.get('type', pokemon_type.type)
-    pokemon_type.pokemon_info = type_req.get('pokemon_info', pokemon_type.pokemon_info)
 
     pokemon_type.full_clean()
     pokemon_type.save()
     return HttpResponse(to_json_one(pokemon_type))
 
 @csrf_exempt
-def delete_pokemon_type(request: HttpRequest, pokemon_info: int, type: str) -> HttpResponse:
+def delete_pokemon_type(request: HttpRequest, national_num: int, type: str) -> HttpResponse:
      # Even if there is no data, request should still be a POST
     assert_post(request)
 
-    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info=pokemon_info)
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
     pokemon_type.delete()
     return HttpResponse(json.dumps({}))
     
