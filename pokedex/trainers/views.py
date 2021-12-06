@@ -2,9 +2,10 @@
 Views for trainer related modules. These can be thought of as DAOs for the models.
 """
 
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
-from trainers.models import Trainers, Teams
+from pokemon.models import PokemonInfo
+from trainers.models import Trainers, Teams, Pokemon
 from utils.serialize import to_json, to_json_one, to_datetime, from_json
 from utils.http import assert_post
 import json
@@ -95,4 +96,52 @@ def delete_team(request: HttpRequest, team_id: int) -> HttpResponse:
 
     team = get_object_or_404(Teams, pk=team_id)
     team.delete()
+    return HttpResponse(json.dumps({}))
+
+def find_all_pokemon(_: HttpRequest) -> HttpResponse:
+    pokemon = Pokemon.objects.all()
+    return HttpResponse(to_json(pokemon))
+
+def find_pokemon_by_team(_: HttpRequest, team_id: int) -> HttpResponse:
+    pokemon = Pokemon.objects.filter(team__id=team_id)
+    return HttpResponse(to_json(pokemon))
+
+@csrf_exempt
+def create_pokemon(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    team = get_object_or_404(Teams, pk=post_req['team'])
+    pokemon_info = get_object_or_404(PokemonInfo, pk=post_req['pokemon_info'])
+
+    pokemon = Pokemon(
+        nickname = post_req['nickname'],
+        gender = post_req['gender'],
+        team = team,
+        pokemon_info = pokemon_info
+    )
+    pokemon.full_clean()
+    pokemon.save()
+    return HttpResponse(to_json_one(pokemon))
+
+@csrf_exempt
+def update_pokemon(request: HttpRequest, pokemon_id: int) -> HttpResponse:
+    assert_post(request)
+    pokemon = get_object_or_404(Pokemon, pk=pokemon_id)
+    post_req = from_json(request)
+
+    # Allow name change, gender change, but do not allow team or pokemon info change
+    pokemon.nickname = post_req.get('nickname', pokemon.nickname)
+    pokemon.gender = post_req.get('gender', pokemon.gender)
+    pokemon.full_clean()
+    pokemon.save()
+
+    return HttpResponse(to_json_one(pokemon))
+
+@csrf_exempt
+def delete_pokemon(request: HttpRequest, pokemon_id: int) -> HttpResponse:
+    # Even if there is no data, request should still be a POST
+    assert_post(request)
+    pokemon = get_object_or_404(Pokemon, pk=pokemon_id)
+
+    pokemon.delete()
     return HttpResponse(json.dumps({}))

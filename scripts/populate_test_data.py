@@ -44,8 +44,16 @@ def main():
         "move_type": "physical",
         "element_type": "fire"
     }
+
+    thunder_punch = {
+        "name": "Thunder Punch",
+        "description": "An electric punch. It may paralyze.",
+        "move_type": "physical",
+        "element_type": "electric"
+    }
+
     move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.MOVE_PREFIX, common.CREATE])
-    for move in [scratch, fire_punch]:
+    for move in [scratch, fire_punch, thunder_punch]:
         common.assert_successful_create(move_path, move)
 
     # Create sample pokemon info
@@ -104,6 +112,27 @@ def main():
     for type in [rock_type, ground_type, electric_type]:
         common.assert_successful_create(pokemon_types_path, type)
 
+    pikachu_knows_scratch = {
+        "pokemon_info": 25,
+        "move": 1
+    }
+    geo_dude_knows_fire_punch = {
+        "pokemon_info": 74,
+        "move": 2
+    }
+    raichu_knows_scratch = {
+        "pokemon_info": 26,
+        "move": 1
+    }
+    raichu_knows_thunder_punch = {
+        "pokemon_info": 26,
+        "move": 3
+    }
+
+    pokemon_move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.MOVE_PREFIX, common.ASSOCIATE])
+    for association in [pikachu_knows_scratch, geo_dude_knows_fire_punch, raichu_knows_scratch, raichu_knows_thunder_punch]:
+        common.assert_successful_create(pokemon_move_path, association)
+    
     # Create sample teams for Gary and ash
     ash_team = {
         "name": "Ash's first team",
@@ -116,6 +145,23 @@ def main():
     team_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.TEAMS, common.CREATE])
     for team in [ash_team, gary_team]:
         common.assert_successful_create(team_path, team)
+
+    # Add ash's pikachu, gary's raichu
+    pikachu = {
+        "nickname": "pikapika",
+        "gender": "male",
+        "team": 1,
+        "pokemon_info": 25
+    }
+    raichu = {
+        "nickname": "raiiii",
+        "gender": "female",
+        "team": 2,
+        "pokemon_info": 26
+    }
+    pokemon_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.TEAMS, common.POKEMON_PREFIX, common.CREATE])
+    for pokemon in [pikachu, raichu]:
+        common.assert_successful_create(pokemon_path, pokemon)
 
 if __name__ == "__main__":
     main()

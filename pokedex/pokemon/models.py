@@ -58,7 +58,7 @@ class Moves(models.Model):
     class Meta:
         db_table = 'moves'
 
-class Gender(models.Model):
+class Gender(models.TextChoices):
     """
     Pokemon genders.
     """
@@ -69,7 +69,7 @@ class Gender(models.Model):
     class Meta:
         db_table = 'genders'
 
-class Region(models.Model):
+class Region(models.TextChoices):
     """
     The regions that pokemon and trainers reside in.
     """
@@ -97,3 +97,15 @@ class PokemonType(models.Model):
     class Meta:
         db_table = 'pokemon_types'
         unique_together = (('type', 'pokemon_info'),)
+class MoveEntry(models.Model):
+    """
+    A reification of the many-to-many relationship between PokemonInfo and Moves
+    """
+    # Sadly, Django does not have support for multiple primary keys, thus we enforce
+    # a unique constraint instead
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
+    move = models.ForeignKey(Moves, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "move_entries"
+        unique_together = (('pokemon_info', 'move'),)

@@ -75,6 +75,29 @@ JSON payload for creating a Team example:
 }
 ```
 
+## Pokemon API
+Pokemon are distinct from [Pokemon Info](#pokemon-info-api): These Pokemon are individual pokemon that are owned by a trainer. PokemonInfo, however, contains information about the species of that particular Pokemon. To access this information, you can use the `host:8000/trainers/teams/pokemon/` endpoint.
+- Getting all pokemon, regardless of team: `host:8000/trainers/teams/pokemon/`
+- Getting pokemon on a team: `host:8000/trainers/teams/pokemon/<id:int>/`
+- Updating pokemon on a team: `host:8000/trainers/teams/pokemon/update/<id:int>/`
+- Creating pokemon on a team: `host:8000/trainers/teams/pokemon/create/`
+- Deleting pokemon on a team: `host:8000/trainers/teams/pokemon/delete/<id:int>/`
+
+For updating or creating, be sure to provide a JSON object mapping the pokemon's keys to its values.
+Updating a pokemon's fields only requires that you provide the fields you want to change, instead of all fields.
+
+Note that you are only allowed to update the `Pokemon`'s `gender` and `nickname`. To move it to another `Team` or associate it with another `PokemonInfo`, you'll need to delete that `Pokemon` and re-create it.
+
+JSON payload for creating a `Pokemon` example:
+```json
+{
+    "nickname": "pika",
+    "gender": "male",
+    "team": 1,
+    "pokemon_info": 25
+}
+```
+
 ## Pokemon Info API
 Pokemon Info is an entry that contains the pokedex information about a specific pokemon species. To access this information, you can use
 the `host:8000/pokemon/pokemon_info/` HTTP endpoint.
@@ -147,6 +170,22 @@ JSON payload example:
     "description": "A Normal-type attack. Sharp claws are used to inflict damage on the target.",
     "move_type": "physical",
     "element_type": "normal"
+}
+```
+
+## MoveEntry API
+Move entries are a reification of the many to many relationship between `PokemonInfo` and `Moves`. If a move entry binds two rows together, that particular pokemon knows how to perform that particular move. To access this information, you can use the `host:8000/pokemon/pokemon_info/moves/` HTTP endpoint.
+
+- Getting all pokemon info - move associations: `host:8000/pokemon/pokemon_info/moves/`
+- Getting pokemon info - move association by pokemon info id: `localhost:8000/pokemon/pokemon_info/moves/<int:id>/`
+- Associate a pokemon info and a move: `host:8000/pokemon/pokemon_info/moves/associate/`
+- Deassociate a pokemon info and a move: `localhost:8000/pokemon/pokemon_info/moves/deassociate/`
+
+Assocation/Deassociation JSON payload example:
+```json
+{
+    "pokemon_info": 26,
+    "move": 2
 }
 ```
 
