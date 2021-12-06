@@ -22,7 +22,9 @@ def main():
     logger.info("Downloading moves...")
     api_importer.migrate_moves()
     logger.info("Download pokemon information...")
-    api_importer.migrate_pokemon_info()
+    pokemon_info = api_importer.migrate_pokemon_info()
+    logger.info("Associating pokemon information with their moves...")
+    api_importer.associate_pokemon_info_with_moves(pokemon_info)
     logger.info("Download complete.")
 
 if __name__ == "__main__":

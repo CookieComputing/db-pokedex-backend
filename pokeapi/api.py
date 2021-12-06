@@ -55,6 +55,11 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
                 return sprites_dict['front_default']
         return sprites_dict['front_default']
 
+    def process_move(move_entry):
+        # Extract the move number from the provided url
+        url = move_entry['url']
+        return int(url.split("/")[-2])
+
     def process_pokemon_data(pokemon_entry):
         # Processes the pokemon data for specific attributes we care about
         species = _get_pokemon_species(pokemon_entry['species']['url'])
@@ -72,7 +77,8 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
             "national_num": pokemon_entry['id'],
             "name": pokemon_entry['name'],
             "description": eng_desc,
-            "photo_url": get_photo_url(pokemon_entry['sprites'])
+            "photo_url": get_photo_url(pokemon_entry['sprites']),
+            "moves": [process_move(move['move']) for move in pokemon_entry['moves']]
         }
         return new_pokemon_data
 
