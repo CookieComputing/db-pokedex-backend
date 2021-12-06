@@ -4,12 +4,13 @@ Views/DAOs for Pokemon related tables
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from pokemon.models import PokemonInfo, Moves, MoveEntry
+from pokemon.models import PokemonInfo, PokemonType, Moves, MoveEntry
 from utils.serialize import to_json, to_json_one, from_json
 from utils.http import assert_post
 from typing import Dict, Any
 import json
 
+# ===POKEMON_INFO===
 def find_all_pokemon_info(_: HttpRequest) -> HttpResponse:
     pokemon_info = PokemonInfo.objects.all()
     return HttpResponse(to_json(pokemon_info))
@@ -99,6 +100,57 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     pokemon_info.delete()
     return HttpResponse(json.dumps({}))
 
+# ===POKEMON_TYPE===
+def find_all_pokemon_types(_: HttpRequest) -> HttpResponse:
+    pokemon_types = PokemonType.objects.all()
+    return HttpResponse(to_json(pokemon_types))
+    
+def find_all_pokemon_types_by_pokemon_id(_: HttpRequest, national_num: int) -> HttpResponse:
+    pokemon_types = PokemonType.objects.all(pokemon_info__pk=national_num)
+    return HttpResponse(to_json(pokemon_types))
+
+def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, national_num: int, type: str) -> HttpResponse:
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
+    return HttpResponse(to_json_one(pokemon_type))
+    
+# The body request should include a national_num identifying which pokemon_info we are looking at 
+@csrf_exempt
+def create_pokemon_type(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    type_req = from_json(request)
+    
+    pokemon_info = get_object_or_404(PokemonInfo, pk=type_req['national_num'])
+    
+    new_type = PokemonType(
+        type=type_req['type'],
+        pokemon_info=pokemon_info
+    )
+    new_type.full_clean()
+    new_type.save()
+    return HttpResponse(to_json_one(new_type))
+
+@csrf_exempt
+def update_pokemon_type(request: HttpRequest, national_num: int, type: str) -> HttpResponse:
+    assert_post(request)
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
+    type_req = from_json(request)
+    
+    pokemon_type.type = type_req.get('type', pokemon_type.type)
+
+    pokemon_type.full_clean()
+    pokemon_type.save()
+    return HttpResponse(to_json_one(pokemon_type))
+
+@csrf_exempt
+def delete_pokemon_type(request: HttpRequest, national_num: int, type: str) -> HttpResponse:
+     # Even if there is no data, request should still be a POST
+    assert_post(request)
+
+    pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
+    pokemon_type.delete()
+    return HttpResponse(json.dumps({}))
+    
+# ===MOVES===
 def find_all_moves(_: HttpRequest) -> HttpResponse:
     moves = Moves.objects.all()
     return HttpResponse(to_json(moves))

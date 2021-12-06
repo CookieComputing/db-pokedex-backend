@@ -91,6 +91,27 @@ def main():
     pokemon_info_series_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_INFO_PREFIX, common.CREATE, common.SERIES])
     common.assert_successful_create(pokemon_info_series_path, pikachu_series)
 
+    # Create sample pokemon types
+    # Sample types
+    # e.g. Geodude (national_num: 74) has two types: rock & ground. Pikachu is an eletric type.
+    rock_type = {
+        "type": "rock",
+        "national_num": 74,
+    }
+    
+    ground_type = {
+        "type": "ground",
+        "national_num": 74,
+    }
+    
+    electric_type = {
+        "type": "electric",
+        "national_num": 25,
+    }
+    pokemon_types_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_TYPE_PREFIX, common.CREATE])
+    for type in [rock_type, ground_type, electric_type]:
+        common.assert_successful_create(pokemon_types_path, type)
+
     pikachu_knows_scratch = {
         "pokemon_info": 25,
         "move": 1
