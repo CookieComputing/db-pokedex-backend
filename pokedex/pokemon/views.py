@@ -113,7 +113,7 @@ def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, national_num: int, 
     pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
     return HttpResponse(to_json_one(pokemon_type))
     
-# The body request should include a national_num identifying which pokemoin_info we are looking at 
+# The body request should include a national_num identifying which pokemon_info we are looking at 
 @csrf_exempt
 def create_pokemon_type(request: HttpRequest) -> HttpResponse:
     assert_post(request)
