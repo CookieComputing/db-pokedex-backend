@@ -21,8 +21,10 @@ def create_trainer(request: HttpRequest) -> HttpResponse:
         username=post_req['username'],
         password=post_req['password'],
         email=post_req['email'],
-        date_of_birth=to_datetime(post_req['date_of_birth'])
     )
+    
+    if 'date_of_birth' in post_req:
+        new_trainer.date_of_birth = to_datetime(post_req['date_of_birth'])
     return HttpResponse(to_json_one(new_trainer))
 
 def find_all_trainers(_: HttpRequest) -> HttpResponse:
