@@ -65,8 +65,8 @@ def _create_pokemon_info(pokemon_info: Dict[str, Any]) -> PokemonInfo:
         evolved_state_pkid = get_object_or_404(PokemonInfo, pk=pokemon_info['evolved_state_pkid'])
     if 'devolved_state_pkid' in pokemon_info:
         devolved_state_pkid = get_object_or_404(PokemonInfo, pk=pokemon_info['devolved_state_pkid'])
-    
-    return PokemonInfo.objects.create(
+        
+    new_pokemon_info = PokemonInfo.objects.create(
         national_num=pokemon_info['national_num'],
         name=pokemon_info['name'],
         photo_url=pokemon_info['photo_url'],
@@ -74,7 +74,18 @@ def _create_pokemon_info(pokemon_info: Dict[str, Any]) -> PokemonInfo:
         evolved_state_pkid=evolved_state_pkid,
         devolved_state_pkid=devolved_state_pkid
     )
+    
+    if evolved_state_pkid:
+        evolved_state_pkid.devolved_state_pkid = new_pokemon_info
+        evolved_state_pkid.save()
+        
+    if devolved_state_pkid:
+        devolved_state_pkid.evolved_state_pkid = new_pokemon_info
+        devolved_state_pkid.save()
+    
+    return new_pokemon_info
 
+# TODO: might need to refactor all these
 @csrf_exempt
 def update_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse:
     assert_post(request)
@@ -85,12 +96,23 @@ def update_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     pokemon_info.photo_url = post_req.get('photo_url', pokemon_info.photo_url)
     pokemon_info.description = post_req.get('description', pokemon_info.description)
     
+    pokemon_info.evolved_state_pkid = None
+    pokemon_info.devolved_state_pkid = None
     if 'evolved_state_pkid' in post_req:
-        pokemon_info.evolved_state_pkid = get_object_or_404(PokemonInfo, pk=int(post_req['evolved_state_pkid']))
+        pokemon_info.evolved_state_pkid = get_object_or_404(PokemonInfo, pk=post_req['evolved_state_pkid'])
     if 'devolved_state_pkid' in post_req:
-        pokemon_info.devolved_state_pkid = get_object_or_404(PokemonInfo, pk=int(post_req['devolved_state_pkid']))
+        pokemon_info.devolved_state_pkid = get_object_or_404(PokemonInfo, pk=post_req['devolved_state_pkid'])
   
     pokemon_info.save()
+    
+    if pokemon_info.evolved_state_pkid:
+        pokemon_info.evolved_state_pkid.devolved_state_pkid = pokemon_info
+        pokemon_info.evolved_state_pkid.save()
+        
+    if pokemon_info.devolved_state_pkid:
+        pokemon_info.devolved_state_pkid.evolved_state_pkid = pokemon_info
+        pokemon_info.devolved_state_pkid.save()
+        
     return HttpResponse(to_json_one(pokemon_info))
 
 @csrf_exempt
@@ -99,6 +121,14 @@ def delete_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     assert_post(request)
 
     pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
+    if pokemon_info.evolved_state_pkid:
+        pokemon_info.evolved_state_pkid.devolved_state_pkid = None
+        pokemon_info.evolved_state_pkid.save()
+        
+    if pokemon_info.devolved_state_pkid:
+        pokemon_info.devolved_state_pkid.evolved_state_pkid = None
+        pokemon_info.devolved_state_pkid.save()
+        
     pokemon_info.delete()
     return HttpResponse(json.dumps({}))
 
