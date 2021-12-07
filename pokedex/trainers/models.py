@@ -1,6 +1,7 @@
 """
 Models for trainer related functionality.
 """
+from datetime import datetime
 from django.db import models
 
 from pokemon.models import Gender, PokemonInfo
@@ -12,7 +13,7 @@ class Trainers(models.Model):
     username = models.CharField(max_length=45)
     password = models.CharField(max_length=45)
     email = models.CharField(max_length=45)
-    date_of_birth = models.DateTimeField()
+    date_of_birth = models.DateTimeField(default=datetime.now)
 
     def __str__():
         return "{} {}".format(self.first_name, self.last_name)
