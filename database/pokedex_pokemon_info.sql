@@ -24,16 +24,16 @@ DROP TABLE IF EXISTS `pokemon_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pokemon_info` (
   `national_num` int NOT NULL,
-  `evolved_state_pkid` int DEFAULT NULL,
-  `devolved_state_pkid` int DEFAULT NULL,
   `name` varchar(45) NOT NULL,
   `photo_url` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
+  `devolved_state_pkid` int DEFAULT NULL,
+  `evolved_state_pkid` int DEFAULT NULL,
   PRIMARY KEY (`national_num`),
-  KEY `devolved_state_idx` (`devolved_state_pkid`),
-  KEY `evolved_state_idx` (`evolved_state_pkid`),
-  CONSTRAINT `devolved_state` FOREIGN KEY (`devolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE,
-  CONSTRAINT `evolved_state` FOREIGN KEY (`evolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`) ON UPDATE CASCADE
+  KEY `pokemon_info_devolved_state_pkid_87bdfbdb_fk_pokemon_i` (`devolved_state_pkid`),
+  KEY `pokemon_info_evolved_state_pkid_fd87168f_fk_pokemon_i` (`evolved_state_pkid`),
+  CONSTRAINT `pokemon_info_devolved_state_pkid_87bdfbdb_fk_pokemon_i` FOREIGN KEY (`devolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`),
+  CONSTRAINT `pokemon_info_evolved_state_pkid_fd87168f_fk_pokemon_i` FOREIGN KEY (`evolved_state_pkid`) REFERENCES `pokemon_info` (`national_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,7 +43,7 @@ CREATE TABLE `pokemon_info` (
 
 LOCK TABLES `pokemon_info` WRITE;
 /*!40000 ALTER TABLE `pokemon_info` DISABLE KEYS */;
-INSERT INTO `pokemon_info` VALUES (25,172,26,'Pikachu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png','Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy'),(26,25,NULL,'Raichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/026.png','Its long tail serves as a ground to protect itself from its own high-voltage power.'),(172,NULL,25,'Pichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/172.png','Despite its small size, it can zap even adult humans. However, if it does so, it also surprises itself.');
+INSERT INTO `pokemon_info` VALUES (25,'Pikachu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png','Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.',172,26),(26,'Raichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/026.png','Its long tail serves as a ground to protect itself from its own high-voltage power.',25,NULL),(74,'geodude','https://assets.pokemon.com/assets/cms2/img/pokedex/full/074.png','Commonly found near mountain trails and the like. If you step on one by accident, it gets angry.',NULL,NULL),(172,'Pichu','https://assets.pokemon.com/assets/cms2/img/pokedex/full/172.png','Despite its small size, it can zap even adult humans. However, if it does so, it also surprises itself.',NULL,25);
 /*!40000 ALTER TABLE `pokemon_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 16:07:55
+-- Dump completed on 2021-12-06 23:55:47

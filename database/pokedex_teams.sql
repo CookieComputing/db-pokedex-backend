@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `teams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teams` (
-  `teid` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `tid` int NOT NULL,
-  PRIMARY KEY (`teid`),
-  KEY `tid_idx` (`tid`),
-  CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `trainers` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `trainer_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `trainers_teams_trainer_id_85be649e_fk_trainers_tid` (`trainer_id`),
+  CONSTRAINT `trainers_teams_trainer_id_85be649e_fk_trainers_tid` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +38,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'Ash\'s team',1),(2,'Gary\'s team',2);
+INSERT INTO `teams` VALUES (1,'Ash\'s first team',1),(2,'Gary\'s first team',2);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 16:07:54
+-- Dump completed on 2021-12-06 23:55:48

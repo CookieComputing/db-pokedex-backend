@@ -16,32 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `move_entries`
+-- Table structure for table `auth_user`
 --
 
-DROP TABLE IF EXISTS `move_entries`;
+DROP TABLE IF EXISTS `auth_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `move_entries` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `move_id` int NOT NULL,
-  `pokemon_info_id` int NOT NULL,
+CREATE TABLE `auth_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `move_entries_pokemon_info_id_move_id_f4e322a5_uniq` (`pokemon_info_id`,`move_id`),
-  KEY `move_entries_move_id_bf473e30_fk_moves_mid` (`move_id`),
-  CONSTRAINT `move_entries_move_id_bf473e30_fk_moves_mid` FOREIGN KEY (`move_id`) REFERENCES `moves` (`mid`),
-  CONSTRAINT `move_entries_pokemon_info_id_0bcc9a50_fk_pokemon_i` FOREIGN KEY (`pokemon_info_id`) REFERENCES `pokemon_info` (`national_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `move_entries`
+-- Dumping data for table `auth_user`
 --
 
-LOCK TABLES `move_entries` WRITE;
-/*!40000 ALTER TABLE `move_entries` DISABLE KEYS */;
-INSERT INTO `move_entries` VALUES (1,1,25),(3,1,26),(4,3,26),(2,2,74);
-/*!40000 ALTER TABLE `move_entries` ENABLE KEYS */;
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06 23:55:47
+-- Dump completed on 2021-12-06 23:55:49

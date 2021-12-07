@@ -29,7 +29,7 @@ CREATE TABLE `trainers` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `date_of_birth` datetime NOT NULL,
+  `date_of_birth` datetime(6) NOT NULL,
   PRIMARY KEY (`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,7 +40,7 @@ CREATE TABLE `trainers` (
 
 LOCK TABLES `trainers` WRITE;
 /*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
-INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','ashketchum','pikachuisbae','ketchum.a@husky.neu.edu','1987-05-22 00:00:00'),(2,'Gary','Oak','garyoak','gottabeatash','oak.g@husky.neu.edu','1984-04-06 00:00:00');
+INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','aketch','pikachu124','ketch.a@husky.neu.edu','2021-12-07 04:54:11.329184'),(2,'Gary','Oak','goak','garyoak123','oak.g@husky.neu.edu','2021-12-07 04:54:11.354820');
 /*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 16:07:56
+-- Dump completed on 2021-12-06 23:55:46

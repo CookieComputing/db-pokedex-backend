@@ -28,11 +28,8 @@ CREATE TABLE `moves` (
   `description` varchar(255) NOT NULL,
   `element_type` varchar(45) NOT NULL,
   `move_type` varchar(45) NOT NULL,
-  PRIMARY KEY (`mid`),
-  KEY `move_type_idx` (`move_type`),
-  KEY `element_type_idx` (`element_type`),
-  CONSTRAINT `move_type` FOREIGN KEY (`move_type`) REFERENCES `move_types` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +38,7 @@ CREATE TABLE `moves` (
 
 LOCK TABLES `moves` WRITE;
 /*!40000 ALTER TABLE `moves` DISABLE KEYS */;
-INSERT INTO `moves` VALUES (1,'Spark','An attack that may cause paralysis.','ELECTRIC','PHYSICAL'),(2,'Nasty Plot','The user stimulates its brain by thinking bad thoughts. It sharply raises the user’s Sp. Atk.','DARK','PHYSICAL');
+INSERT INTO `moves` VALUES (1,'Scratch','A Normal-type attack. Sharp claws are used to inflict damage on the target.','normal','physical'),(2,'Fire Punch','A fiery punch. May cause a burn.','fire','physical'),(3,'Thunder Punch','An electric punch. It may paralyze.','electric','physical');
 /*!40000 ALTER TABLE `moves` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 16:07:56
+-- Dump completed on 2021-12-06 23:55:46

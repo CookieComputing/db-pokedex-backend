@@ -23,18 +23,16 @@ DROP TABLE IF EXISTS `pokemon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pokemon` (
-  `pid` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `nickname` varchar(45) NOT NULL,
-  `info` int NOT NULL,
-  `team` int NOT NULL,
   `gender` varchar(45) NOT NULL,
-  PRIMARY KEY (`pid`),
-  KEY `gender_idx` (`gender`),
-  KEY `pokemon_to_team` (`team`),
-  KEY `pokemon_to_pokemon_info` (`info`),
-  CONSTRAINT `gender` FOREIGN KEY (`gender`) REFERENCES `genders` (`gender`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pokemon_to_pokemon_info` FOREIGN KEY (`info`) REFERENCES `pokemon_info` (`national_num`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pokemon_to_team` FOREIGN KEY (`team`) REFERENCES `teams` (`teid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `pokemon_info_id` int NOT NULL,
+  `team_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pokemon_team_id_94f23bae_fk_teams_id` (`team_id`),
+  KEY `pokemon_pokemon_info_id_12a442de_fk_pokemon_info_national_num` (`pokemon_info_id`),
+  CONSTRAINT `pokemon_pokemon_info_id_12a442de_fk_pokemon_info_national_num` FOREIGN KEY (`pokemon_info_id`) REFERENCES `pokemon_info` (`national_num`),
+  CONSTRAINT `pokemon_team_id_94f23bae_fk_teams_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -44,7 +42,7 @@ CREATE TABLE `pokemon` (
 
 LOCK TABLES `pokemon` WRITE;
 /*!40000 ALTER TABLE `pokemon` DISABLE KEYS */;
-INSERT INTO `pokemon` VALUES (1,'pika',25,1,'MALE'),(2,'rai',26,2,'FEMALE');
+INSERT INTO `pokemon` VALUES (1,'pikapika','male',25,1),(2,'raiiii','female',26,2);
 /*!40000 ALTER TABLE `pokemon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 16:07:56
+-- Dump completed on 2021-12-06 23:55:47
