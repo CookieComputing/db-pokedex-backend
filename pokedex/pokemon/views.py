@@ -85,10 +85,12 @@ def update_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     pokemon_info.photo_url = post_req.get('photo_url', pokemon_info.photo_url)
     pokemon_info.description = post_req.get('description', pokemon_info.description)
     
+    pokemon_info.evolved_state_pkid = None
+    pokemon_info.devolved_state_pkid = None
     if 'evolved_state_pkid' in post_req:
-        pokemon_info.evolved_state_pkid = get_object_or_404(PokemonInfo, pk=int(post_req['evolved_state_pkid']))
+        pokemon_info.evolved_state_pkid = get_object_or_404(PokemonInfo, pk=post_req['evolved_state_pkid'])
     if 'devolved_state_pkid' in post_req:
-        pokemon_info.devolved_state_pkid = get_object_or_404(PokemonInfo, pk=int(post_req['devolved_state_pkid']))
+        pokemon_info.devolved_state_pkid = get_object_or_404(PokemonInfo, pk=post_req['devolved_state_pkid'])
   
     pokemon_info.save()
     return HttpResponse(to_json_one(pokemon_info))
