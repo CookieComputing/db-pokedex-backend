@@ -81,7 +81,6 @@ def update_pokemon_info(request: HttpRequest, national_num: int) -> HttpResponse
     pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
     post_req = from_json(request)
 
-    pokemon_info.national_num = post_req.get('national_num', pokemon_info.national_num)
     pokemon_info.name = post_req.get('name', pokemon_info.name)
     pokemon_info.photo_url = post_req.get('photo_url', pokemon_info.photo_url)
     pokemon_info.description = post_req.get('description', pokemon_info.description)
