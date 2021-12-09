@@ -3,8 +3,7 @@ Models for trainer related functionality.
 """
 from datetime import datetime
 from django.db import models
-
-from pokemon.models import Gender, PokemonInfo
+from pokemon.models import Gender, PokemonInfo, Region
 
 class Trainers(models.Model):
     tid = models.AutoField(primary_key=True)
@@ -46,3 +45,12 @@ class Pokemon(models.Model):
     
     class Meta:
         db_table = "pokemon"
+        
+class Pokedex(models.Model):
+    """
+    The Pokedex contains a region and what PokemonInfos it contains.
+    """
+    type = models.CharField(max_length=45, choices=Region.choices)
+    
+    class Meta:
+        db_table = "pokedex"
