@@ -150,6 +150,28 @@ An example of creating a series of PokemonInfo:
     }
 ]
 ```
+
+## Pokemon Type API
+A pokemon has potentially several element types, indicating the types of moves they could have and whether or not
+various moves are effective against them. To access this information, you can use the `host:8000/pokemon_type/` endpoint:
+- Finding all pokemon types: `host:8000/pokemon/pokemon_type/`
+- Finding all pokemon types for a given pokemon: `host:8000/pokemon/pokemon_type/<int:id>`
+- Find the type association for a pokemon and its element type: `host:8000/pokemon/pokemon_type/<int:id>/<str:type>/`
+- Creating a pokemon type association: `host:8000/pokemon/pokemon_type/create/`
+- Updating a pokemon type association: `host:8000/pokemon/pokemon_type/update/<int:id>/<str:type>/`
+- Deleting a pokemon type association: `host:8000/pokemon/pokemon_type/delete/<int:id>/<str:type>/`
+
+For updating or creating, be sure to provide a JSON object mapping the pokemon type's keys to its values.
+When updating, you are only allowed to change the type from the original type to a newer type.
+
+Example payload:
+```json
+{
+    "type": "electric",
+    "pokemon_info": 25
+}
+```
+
 ## Move API
 Moves are the moves that a pokemon can use in battle. To access this information, you can use the 
 `host:8000/pokemon/move` HTTP endpoint.
