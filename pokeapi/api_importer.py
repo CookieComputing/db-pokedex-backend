@@ -19,6 +19,7 @@ POKEMON_PREFIX = "pokemon"
 MOVE_PREFIX = "moves"
 POKEMON_INFO_PREFIX = "pokemon_info"
 CREATE = "create"
+UPDATE = "update"
 ASSOCIATE = "associate"
 logger = logging.getLogger("api_importer")
 def migrate_moves() -> None:
@@ -54,6 +55,48 @@ def migrate_pokemon_info() -> List[Dict[str, Any]]:
 
     logger.info("pokemon info successfully imported")
     return pokemon_info
+
+def migrate_evolution_chains(pokemon_list: List[Dict[str, Any]]) -> None:
+    """
+    Connects each pokemon with their new predecessors and successors from the provided evolution chain.
+
+    :raises: Error if there's an issue connecting each of the Pokemon in the evolution chain
+    """
+
+    pokemon_list = [pokemon for pokemon in pokemon_list if 'evolution_chain' in pokemon]
+    evolution_chain_set = set([pokemon['evolution_chain'] for pokemon in pokemon_list])
+    logger.info("creating evolution chains")
+    chains = []
+    for evolution_chain in evolution_chain_set:
+        chains.append(api.get_evolution_chain_data(evolution_chain))
+
+    logger.info("evolution chains successfully establishing, migrating in database")
+
+    for chain in chains:
+        if len(chain) <= 1:
+            continue
+
+        for i in range(len(chain)):
+            if i == 0:
+                updated_pokemon = {
+                    "national_num": chain[i],
+                    "evolved_state_pkid": chain[i+1]
+                }
+            elif i == len(chain)-1:
+                updated_pokemon = {
+                    "national_num": chain[i],
+                    "devolved_state_pkid": chain[i-1]
+                }
+            else:
+                updated_pokemon = {
+                    "national_num": chain[i],
+                    "evolved_state_pkid": chain[i+1],
+                    "devolved_state_pkid": chain[i-1]
+                }
+            response = requests.post(_format_path(DB_HOST, [POKEMON_PREFIX, POKEMON_INFO_PREFIX, UPDATE, str(chain[i])]), json=updated_pokemon)
+            if response.status_code != 200:
+                raise ValueError("Error when updating the evolution chain, status code: {}, pokemon national_num: {}".format(response.status_code, chain[i]))
+    logger.info("evolution chains successfully imported")
 
 def associate_pokemon_info_with_moves(pokemon_info: List[Dict[str, Any]]) -> None:
     """

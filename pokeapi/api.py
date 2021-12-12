@@ -13,6 +13,7 @@ POKEAPI_URL_PREFIX = "https://pokeapi.co/api/v2/"
 POKEMON_API_PREFIX = "pokemon/"
 POKEMON_MOVE_PREFIX = "move/"
 REGION_PREFIX = "region/"
+EVOLUTION_CHAIN = "evolution-chain/"
 REGIONS = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar"]
 logger = logging.getLogger("pokeapi")
 
@@ -80,6 +81,8 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
             "photo_url": get_photo_url(pokemon_entry['sprites']),
             "moves": [process_move(move['move']) for move in pokemon_entry['moves']]
         }
+        if species['evolution_chain']:
+            new_pokemon_data['evolution_chain'] = species['evolution_chain']
         return new_pokemon_data
 
     logger.info("Querying API for pokemon data")
@@ -154,6 +157,30 @@ def get_all_moves() -> List[Dict[str, str]]:
     move_links = _get_all_move_links()
     return [_get_move(move_link) for move_link in move_links]
 
+def get_evolution_chain_data(evolution_chain: int) -> List[int]:
+    """
+    Returns the evolution chain from the id of the evolution chain. This is a list of
+    national_nums for each of the corresponding pokemon.
+    """
+    api_query = urljoin(POKEAPI_URL_PREFIX, EVOLUTION_CHAIN)
+    api_query = "{}{}".format(api_query, evolution_chain)
+    response = requests.get(api_query)
+    if response.status_code != 200:
+        raise ValueError("Error code when finding evolution chain: {}, URL attempted: {}".format(response.status_code, api_query))
+
+    evolution_chain = response.json()
+    chain = evolution_chain['chain']
+    result = []
+
+    while chain:
+        result.append(int(chain['species']['url'].split('/')[-2]))
+
+        if chain['evolves_to']:
+            chain = chain['evolves_to'][0]
+        else:
+            break
+    return result
+
 def _get_all_move_links() -> List[str]:
     """
     Retrieves all the API endpoint links represented by PokeAPI's move API. The list of strings returned are
@@ -220,6 +247,8 @@ def _get_pokemon_species(species_url: str) -> Dict[str, str]:
     species['names'] = _filter_eng(species['names'])
     species['genera'] = _filter_eng(species['genera'])
     species['flavor_text_entries'] = _filter_eng(species['flavor_text_entries'])
+    if 'evolution_chain' in species:
+        species['evolution_chain'] = int(species['evolution_chain']['url'].split('/')[-2])
     return species
 
 def _filter_eng(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
