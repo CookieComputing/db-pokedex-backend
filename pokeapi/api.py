@@ -81,10 +81,6 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
             "photo_url": get_photo_url(pokemon_entry['sprites']),
             "moves": [process_move(move['move']) for move in pokemon_entry['moves']]
         }
-
-        if species['predecessor']:
-            # There is some sort of predecessor entry, we need to manually connect the two entries
-            new_pokemon_data['predecessor'] = int(species['predecessor']['url'].split('/')[-2])
         if species['evolution_chain']:
             new_pokemon_data['evolution_chain'] = species['evolution_chain']
         return new_pokemon_data
@@ -251,7 +247,6 @@ def _get_pokemon_species(species_url: str) -> Dict[str, str]:
     species['names'] = _filter_eng(species['names'])
     species['genera'] = _filter_eng(species['genera'])
     species['flavor_text_entries'] = _filter_eng(species['flavor_text_entries'])
-    species['predecessor'] = species['evolves_from_species']
     if 'evolution_chain' in species:
         species['evolution_chain'] = int(species['evolution_chain']['url'].split('/')[-2])
     return species
