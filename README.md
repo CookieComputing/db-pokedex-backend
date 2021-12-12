@@ -189,6 +189,27 @@ Assocation/Deassociation JSON payload example:
 }
 ```
 
+## Pokedex API
+Pokedexes are used to help trainers keep track of which pokemon they have seen on their journeys. To access this information, you can use the `host:8000/trainers/pokedex/` HTTP endpoint.
+
+- Getting all pokedexes: `host:8000/trainers/pokedex/`
+- Getting all pokedexes for a given trainer: `host:8000/trainers/pokedex/trainer/<int:id>/`
+- Getting a pokedex by its ID: `host:8000/trainers/pokedex/<int:id>/`
+- Creating a pokedex: `host:8000/trainers/pokedex/create/`
+- Updating a pokedex: `host:8000/trainers/pokedex/update/<int:id>/`
+- Deleting a pokedex: `host:8000/trainers/pokedex/delete/<int:id>/`
+
+For updating or creating, be sure to provide a JSON object mapping the pokedex's keys to its values.
+Updating a move's fields only requires that you provide the fields you want to change, instead of all fields.
+
+JSON payload example:
+```json
+{
+    "region": "kanto",
+    "trainer": 1
+}
+```
+
 ## Generating Authentic Pokemon Data
 We query PokeAPI's interface in order to extract legitimate data about pokemon. To set up your server with legitimate pokemon information, run `make build` in another terminal while the server is running.
 
