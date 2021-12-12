@@ -50,8 +50,9 @@ class Pokedex(models.Model):
     """
     The Pokedex contains a region and what PokemonInfos it contains.
     """
-    type = models.CharField(max_length=45, choices=Region.choices)
+    region = models.CharField(max_length=45, choices=Region.choices)
     trainer = models.ForeignKey(Trainers, models.CASCADE, null=True)
     
     class Meta:
         db_table = "pokedex"
+        unique_together = (('region', 'trainer'),)
