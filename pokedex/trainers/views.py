@@ -5,7 +5,7 @@ Views for trainer related modules. These can be thought of as DAOs for the model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
 from pokemon.models import PokemonInfo
-from trainers.models import Trainers, Teams, Pokemon
+from trainers.models import Trainers, Teams, Pokemon, Pokedex
 from utils.serialize import to_json, to_json_one, to_datetime, from_json
 from utils.http import assert_post
 import json
@@ -147,4 +147,49 @@ def delete_pokemon(request: HttpRequest, pokemon_id: int) -> HttpResponse:
     pokemon = get_object_or_404(Pokemon, pk=pokemon_id)
 
     pokemon.delete()
+    return HttpResponse(json.dumps({}))
+
+def find_all_pokedexes(_: HttpRequest) -> HttpResponse:
+    pokedexes = Pokedex.objects.all()
+    return HttpResponse(to_json(pokedexes))
+
+def find_pokedexes_by_trainer_id(_: HttpRequest, trainer_id: int) -> HttpResponse:
+    pokedexes = Pokedex.objects.filter(trainer__tid=trainer_id)
+    return HttpResponse(to_json(pokedexes))
+
+def find_pokedex_by_id(_: HttpRequest, pokedex_id: int) -> HttpResponse:
+    pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
+    return HttpResponse(to_json_one(pokedex))
+
+@csrf_exempt
+def create_pokedex(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    trainer = get_object_or_404(Trainers, pk=int(post_req['trainer']))
+    
+    pokedex = Pokedex.objects.create(
+        region=post_req['region'],
+        trainer=trainer
+    )
+    pokedex.full_clean()
+    return HttpResponse(to_json_one(pokedex))
+
+@csrf_exempt
+def update_pokedex(request: HttpRequest, pokedex_id: int) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
+
+    pokedex.region = post_req.get('region', pokedex.region)
+    pokedex.trainer = post_req.get('trainer', pokedex.trainer)
+    pokedex.full_clean()
+    pokedex.save()
+    return HttpResponse(to_json_one(pokedex))
+
+@csrf_exempt
+def delete_pokedex(request: HttpRequest, pokedex_id: int) -> HttpResponse:
+    assert_post(request)
+    pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
+
+    pokedex.delete()
     return HttpResponse(json.dumps({}))
