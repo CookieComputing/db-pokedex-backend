@@ -168,7 +168,7 @@ Example payload:
 ```json
 {
     "type": "electric",
-    "pokemon_info": 25
+    "national_num": 25
 }
 ```
 

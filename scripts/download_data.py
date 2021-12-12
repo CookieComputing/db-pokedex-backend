@@ -23,6 +23,8 @@ def main():
     api_importer.migrate_moves()
     logger.info("Download pokemon information...")
     pokemon_info = api_importer.migrate_pokemon_info()
+    logger.info("Associating pokemon with their given types...")
+    api_importer.associate_pokemon_info_with_type(pokemon_info)
     logger.info("Forming evolution chains for pokemon...")
     api_importer.migrate_evolution_chains(pokemon_info)
     logger.info("Associating pokemon information with their moves...")

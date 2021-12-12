@@ -79,7 +79,8 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
             "name": pokemon_entry['name'],
             "description": eng_desc,
             "photo_url": get_photo_url(pokemon_entry['sprites']),
-            "moves": [process_move(move['move']) for move in pokemon_entry['moves']]
+            "moves": [process_move(move['move']) for move in pokemon_entry['moves']],
+            "types": pokemon_entry['types']
         }
         if species['evolution_chain']:
             new_pokemon_data['evolution_chain'] = species['evolution_chain']
@@ -87,6 +88,7 @@ def get_all_pokemon_info() -> List[Dict[str, Any]]:
 
     logger.info("Querying API for pokemon data")
     pokemon_raw_data = add_pokemon_url(api_query)
+    logger.info("Processing pokemon data")
     return [process_pokemon_data(pokemon) for pokemon in pokemon_raw_data]
 
 def get_pokemon_info(national_num: Union[int, str]) -> dict:
