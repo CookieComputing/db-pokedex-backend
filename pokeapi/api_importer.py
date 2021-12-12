@@ -98,8 +98,6 @@ def migrate_evolution_chains(pokemon_list: List[Dict[str, Any]]) -> None:
                 raise ValueError("Error when updating the evolution chain, status code: {}, pokemon national_num: {}".format(response.status_code, chain[i]))
     logger.info("evolution chains successfully imported")
 
-
-
 def associate_pokemon_info_with_moves(pokemon_info: List[Dict[str, Any]]) -> None:
     """
     Associates the pokemon information in the database with all of the moves they are associated with.
