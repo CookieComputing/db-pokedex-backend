@@ -133,6 +133,28 @@ def main():
     for association in [pikachu_knows_scratch, geo_dude_knows_fire_punch, raichu_knows_scratch, raichu_knows_thunder_punch]:
         common.assert_successful_create(pokemon_move_path, association)
     
+    # Create pokedexes for Gary and Ash
+    ash_kanto = {
+        "region": "kanto",
+        "trainer": 1
+    }
+    ash_sinnoh = {
+        "region": "sinnoh",
+        "trainer": 1
+    }
+    gary_kanto = {
+        "region": "kanto",
+        "trainer": 2
+    }
+    gary_johto = {
+        "region": "johto",
+        "trainer": 2
+    }
+    
+    pokedex_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.POKEDEX_PREFIX, common.CREATE])
+    for pokedex_create in [ash_kanto, ash_sinnoh, gary_kanto, gary_johto]:
+        common.assert_successful_create(pokedex_path, pokedex_create)
+
     # Create sample teams for Gary and ash
     ash_team = {
         "name": "Ash's first team",
