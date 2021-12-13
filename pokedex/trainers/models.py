@@ -37,8 +37,8 @@ class Pokemon(models.Model):
     """
     nickname = models.CharField(max_length=45)
     gender = models.CharField(max_length=45, choices=Gender.choices)
-    team = models.ForeignKey(Teams, models.CASCADE)
-    pokemon_info = models.ForeignKey(PokemonInfo, models.CASCADE)
+    team = models.ForeignKey(Teams, on_delete=models.CASCADE)
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
 
     def __str__():
         return "{}".format(self.nickname)
@@ -51,7 +51,7 @@ class Pokedex(models.Model):
     The Pokedex contains a region and what PokemonInfos it contains.
     """
     region = models.CharField(max_length=45, choices=Region.choices)
-    trainer = models.ForeignKey(Trainers, models.CASCADE)
+    trainer = models.ForeignKey(Trainers, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "pokedex"
