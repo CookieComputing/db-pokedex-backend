@@ -138,7 +138,7 @@ def find_all_pokemon_types(_: HttpRequest) -> HttpResponse:
     return HttpResponse(to_json(pokemon_types))
     
 def find_all_pokemon_types_by_pokemon_id(_: HttpRequest, national_num: int) -> HttpResponse:
-    pokemon_types = PokemonType.objects.all(pokemon_info__pk=national_num)
+    pokemon_types = PokemonType.objects.filter(pokemon_info__pk=national_num)
     return HttpResponse(to_json(pokemon_types))
 
 def find_pokemon_type_by_pokemon_id_and_type(_: HttpRequest, national_num: int, type: str) -> HttpResponse:
