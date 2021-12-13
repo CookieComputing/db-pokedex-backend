@@ -5,7 +5,7 @@ Views for trainer related modules. These can be thought of as DAOs for the model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
 from pokemon.models import PokemonInfo
-from trainers.models import Trainers, Teams, Pokemon, Pokedex
+from trainers.models import Trainers, Teams, Pokemon, Pokedex, PokedexEntry
 from utils.serialize import to_json, to_json_one, to_datetime, from_json
 from utils.http import assert_post
 import json
@@ -192,4 +192,26 @@ def delete_pokedex(request: HttpRequest, pokedex_id: int) -> HttpResponse:
     pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
 
     pokedex.delete()
+    return HttpResponse(json.dumps({}))
+
+@csrf_exempt
+def associate_pokedex_with_pokemon_info(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+    
+    pokedex = get_object_or_404(Pokedex, pk=post_req['pokedex'])
+    pokemon_info = get_object_or_404(PokemonInfo, pk=post_req['pokemon_info'])
+    pokedex_entry = PokedexEntry.objects.create(
+        pokedex=pokedex,
+        pokemon_info=pokemon_info
+    )
+    return HttpResponse(to_json_one(pokedex_entry))
+
+@csrf_exempt
+def deassociate_pokedex_with_pokemon_info(request: HttpRequest) -> HttpResponse:
+    assert_post(request)
+    post_req = from_json(request)
+
+    pokedex_entry = get_object_or_404(PokedexEntry, pokedex__id=post_req['pokedex'], pokemon_info__national_num=post_req['pokemon_info'])
+    pokedex_entry.delete()
     return HttpResponse(json.dumps({}))

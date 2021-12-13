@@ -18,10 +18,13 @@ urlpatterns = [
     path('teams/pokemon/create/', views.create_pokemon, name='create_pokemon'),
     path('teams/pokemon/update/<int:pokemon_id>/', views.update_pokemon, name='update_pokemon'),
     path('teams/pokemon/delete/<int:pokemon_id>/', views.delete_pokemon, name='delete_pokemon'),
+
     path('pokedex/', views.find_all_pokedexes, name='find_all_pokedexes'),
     path('pokedex/trainer/<int:trainer_id>/', views.find_pokedexes_by_trainer_id, name='find_pokedexes_by_trainer_id'),
     path('pokedex/<int:pokedex_id>/', views.find_pokedex_by_id, name='find_pokedex_by_id'),
     path('pokedex/create/', views.create_pokedex, name='create_pokedex'),
     path('pokedex/update/<int:pokedex_id>/', views.update_pokedex, name='update_pokedex'),
-    path('pokedex/delete/<int:pokedex_id>/', views.delete_pokedex, name='delete_pokedex')
+    path('pokedex/delete/<int:pokedex_id>/', views.delete_pokedex, name='delete_pokedex'),
+    path('pokedex/associate/', views.associate_pokedex_with_pokemon_info, name='associate_pokedexes_with_pokemon_info'),
+    path('pokedex/deassociate/', views.deassociate_pokedex_with_pokemon_info, name='deassociate_pokedexes_with_pokemon_info'),
 ]
