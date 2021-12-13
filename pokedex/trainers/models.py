@@ -56,3 +56,16 @@ class Pokedex(models.Model):
     class Meta:
         db_table = "pokedex"
         unique_together = (('region', 'trainer'),)
+
+class PokedexEntry(models.Model):
+    """
+    A reification of a many-to-many relationship between Pokedexes and PokemonInfo
+    """
+    pokedex = models.ForeignKey(Pokedex, on_delete=models.CASCADE)
+    pokemon_info = models.ForeignKey(PokemonInfo, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "pokedex_entry"
+        # There should only be one entry for each pair in the database
+        unique_together = (('pokedex', 'pokemon_info'),)
+    

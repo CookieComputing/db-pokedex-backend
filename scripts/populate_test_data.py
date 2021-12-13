@@ -155,6 +155,32 @@ def main():
     for pokedex_create in [ash_kanto, ash_sinnoh, gary_kanto, gary_johto]:
         common.assert_successful_create(pokedex_path, pokedex_create)
 
+    # Gary and Ash's pokedexes know a bit about some pokemon
+    gary_kanto_knows_pichu = {
+        "pokedex": 3,
+        "pokemon_info": 172
+    }
+    gary_kanto_knows_raichu = {
+        "pokedex": 3,
+        "pokemon_info": 26
+    }
+    ash_kanto_knows_pikachu = {
+        "pokedex": 1,
+        "pokemon_info": 25
+    }
+    ash_kanto_knows_geodude = {
+        "pokedex": 1,
+        "pokemon_info": 74
+    }
+    ash_sinnoh_knows_geodude = {
+        "pokedex": 2,
+        "pokemon_info": 74
+    }
+
+    pokedex_assoc_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.POKEDEX_PREFIX, common.ASSOCIATE])
+    for pokedex_assoc in [gary_kanto_knows_pichu, gary_kanto_knows_raichu, ash_kanto_knows_pikachu, ash_kanto_knows_geodude, ash_sinnoh_knows_geodude]:
+        common.assert_successful_create(pokedex_assoc_path, pokedex_assoc)
+
     # Create sample teams for Gary and ash
     ash_team = {
         "name": "Ash's first team",
