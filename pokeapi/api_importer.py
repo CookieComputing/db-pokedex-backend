@@ -18,6 +18,7 @@ DB_HOST = env('DATABASE_HOST')
 POKEMON_PREFIX = "pokemon"
 MOVE_PREFIX = "moves"
 POKEMON_INFO_PREFIX = "pokemon_info"
+POKEMON_TYPE_PREFIX = "pokemon_type"
 CREATE = "create"
 UPDATE = "update"
 ASSOCIATE = "associate"
@@ -55,6 +56,26 @@ def migrate_pokemon_info() -> List[Dict[str, Any]]:
 
     logger.info("pokemon info successfully imported")
     return pokemon_info
+
+def associate_pokemon_info_with_type(pokemon_list: List[Dict[str, Any]]) -> None:
+    """
+    Associates a pokemon with their natural element types.
+
+    :raises: Error if there's an issue associating a pokemon with their element types
+    """
+    logger.info("Starting pokemon type association process")
+    for pokemon in pokemon_list:
+        for t in pokemon['types']:
+            pokemon_type = t['type']['name']
+            type_assoc = {
+                "type": pokemon_type,
+                "national_num": int(pokemon['national_num'])
+            }
+            response = requests.post(_format_path(DB_HOST, [POKEMON_PREFIX, POKEMON_TYPE_PREFIX, CREATE]), json=type_assoc)
+            if response.status_code != 200:
+                raise ValueError("Unexpected error when associating types for pokemon info, error code: {}".format(response.status_code))
+
+    logger.info("All pokemon types successfully associated")
 
 def migrate_evolution_chains(pokemon_list: List[Dict[str, Any]]) -> None:
     """
