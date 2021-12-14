@@ -27,8 +27,8 @@ CREATE TABLE `teams` (
   `name` varchar(45) NOT NULL,
   `trainer_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `trainers_teams_trainer_id_85be649e_fk_trainers_tid` (`trainer_id`),
-  CONSTRAINT `trainers_teams_trainer_id_85be649e_fk_trainers_tid` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`tid`)
+  KEY `teams_trainer_id_7d7f04f3_fk_trainers_tid` (`trainer_id`),
+  CONSTRAINT `teams_trainer_id_7d7f04f3_fk_trainers_tid` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06 23:55:48
+-- Dump completed on 2021-12-13 21:30:12

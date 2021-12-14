@@ -16,32 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trainers`
+-- Table structure for table `pokedex_entry`
 --
 
-DROP TABLE IF EXISTS `trainers`;
+DROP TABLE IF EXISTS `pokedex_entry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trainers` (
-  `tid` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `date_of_birth` datetime(6) NOT NULL,
-  PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `pokedex_entry` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `pokedex_id` bigint NOT NULL,
+  `pokemon_info_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pokedex_entry_pokedex_id_pokemon_info_id_8f3a494c_uniq` (`pokedex_id`,`pokemon_info_id`),
+  KEY `pokedex_entry_pokemon_info_id_564cabb6_fk_pokemon_i` (`pokemon_info_id`),
+  CONSTRAINT `pokedex_entry_pokedex_id_2ff68a5d_fk_pokedex_id` FOREIGN KEY (`pokedex_id`) REFERENCES `pokedex` (`id`),
+  CONSTRAINT `pokedex_entry_pokemon_info_id_564cabb6_fk_pokemon_i` FOREIGN KEY (`pokemon_info_id`) REFERENCES `pokemon_info` (`national_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trainers`
+-- Dumping data for table `pokedex_entry`
 --
 
-LOCK TABLES `trainers` WRITE;
-/*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
-INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','aketch','pikachu124','ketch.a@husky.neu.edu','2021-12-14 02:29:13.817125'),(2,'Gary','Oak','goak','garyoak123','oak.g@husky.neu.edu','2021-12-14 02:29:13.864875');
-/*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
+LOCK TABLES `pokedex_entry` WRITE;
+/*!40000 ALTER TABLE `pokedex_entry` DISABLE KEYS */;
+INSERT INTO `pokedex_entry` VALUES (3,1,25),(4,1,74),(5,2,74),(2,3,26),(1,3,172);
+/*!40000 ALTER TABLE `pokedex_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 21:30:11
+-- Dump completed on 2021-12-13 21:30:14

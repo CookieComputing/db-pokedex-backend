@@ -16,32 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trainers`
+-- Table structure for table `pokedex`
 --
 
-DROP TABLE IF EXISTS `trainers`;
+DROP TABLE IF EXISTS `pokedex`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trainers` (
-  `tid` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `date_of_birth` datetime(6) NOT NULL,
-  PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `pokedex` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `region` varchar(45) NOT NULL,
+  `trainer_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pokedex_region_trainer_id_a88810f1_uniq` (`region`,`trainer_id`),
+  KEY `pokedex_trainer_id_2f16f8af_fk_trainers_tid` (`trainer_id`),
+  CONSTRAINT `pokedex_trainer_id_2f16f8af_fk_trainers_tid` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`tid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trainers`
+-- Dumping data for table `pokedex`
 --
 
-LOCK TABLES `trainers` WRITE;
-/*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
-INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','aketch','pikachu124','ketch.a@husky.neu.edu','2021-12-14 02:29:13.817125'),(2,'Gary','Oak','goak','garyoak123','oak.g@husky.neu.edu','2021-12-14 02:29:13.864875');
-/*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
+LOCK TABLES `pokedex` WRITE;
+/*!40000 ALTER TABLE `pokedex` DISABLE KEYS */;
+INSERT INTO `pokedex` VALUES (4,'johto',2),(1,'kanto',1),(3,'kanto',2),(2,'sinnoh',1);
+/*!40000 ALTER TABLE `pokedex` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 21:30:11
+-- Dump completed on 2021-12-13 21:30:13
