@@ -16,6 +16,7 @@ urlpatterns = [
     path('pokemon_type/create/', views.create_pokemon_type, name='create_pokemon_type'),
     path('pokemon_type/update/<int:national_num>/<str:type>/', views.update_pokemon_type, name='update_pokemon_type'),
     path('pokemon_type/delete/<int:national_num>/<str:type>/', views.delete_pokemon_type, name='delete_pokemon_type'),
+    path('pokemon_type/apply/<int:national_num>/', views.apply_pokemon_types, name='apply_pokemon_types'),
 
     path('moves/', views.find_all_moves, name='find_all_moves'),
     path('moves/<int:move_id>/', views.find_move_by_id, name='find_move_by_id'),

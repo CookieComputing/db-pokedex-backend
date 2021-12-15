@@ -1,10 +1,11 @@
 """
 Views/DAOs for Pokemon related tables
 """
+from django.http.response import Http404, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from pokemon.models import PokemonInfo, PokemonType, Moves, MoveEntry
+from pokemon.models import PokemonInfo, PokemonType, Moves, MoveEntry, ElementTypes
 from utils.serialize import to_json, to_json_one, from_json
 from utils.http import assert_post
 from typing import Dict, Any
@@ -181,6 +182,41 @@ def delete_pokemon_type(request: HttpRequest, national_num: int, type: str) -> H
     pokemon_type = get_object_or_404(PokemonType, type=type, pokemon_info__pk=national_num)
     pokemon_type.delete()
     return HttpResponse(json.dumps({}))
+
+@csrf_exempt
+def apply_pokemon_types(request: HttpRequest, national_num: int) -> HttpResponse:
+    # A wrapper to help apply various types to the backend. The array provided in the
+    # body will be used to enforce what should be in the backend.
+    assert_post(request)
+    post_req = from_json(request)
+
+    types = set(post_req['types'])
+    type_choices = set([x for x, y in ElementTypes.choices])
+    for t in types:
+        if t not in type_choices:
+            raise Http404("Bad type: {}".format(t))
+    
+    pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
+    pokemon_types = PokemonType.objects.filter(pokemon_info__national_num=national_num)
+
+    seen = set()
+    for pokemon_type in pokemon_types:
+        if pokemon_type.type not in types:
+            pokemon_type.delete()
+        else:
+            seen.add(pokemon_type.type)
+    
+    res = []
+    for new_type in types:
+        if new_type not in seen:
+            res.append(PokemonType.objects.create(
+                type=new_type,
+                pokemon_info = pokemon_info
+            ))
+
+    return HttpResponse(to_json(res))
+
+
     
 # ===MOVES===
 def find_all_moves(_: HttpRequest) -> HttpResponse:
