@@ -176,9 +176,13 @@ def update_pokedex(request: HttpRequest, pokedex_id: int) -> HttpResponse:
     assert_post(request)
     post_req = from_json(request)
     pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
+    if 'trainer' in post_req:
+        trainer = get_object_or_404(Trainers, pk=post_req['trainer'])
+        pokedex.trainer = trainer
+
+    
 
     pokedex.region = post_req.get('region', pokedex.region)
-    pokedex.trainer = post_req.get('trainer', pokedex.trainer)
     pokedex.full_clean()
     pokedex.save()
     return HttpResponse(to_json_one(pokedex))
