@@ -216,3 +216,23 @@ def deassociate_pokedex_with_pokemon_info(request: HttpRequest) -> HttpResponse:
     pokedex_entry = get_object_or_404(PokedexEntry, pokedex__id=post_req['pokedex'], pokemon_info__national_num=post_req['pokemon_info'])
     pokedex_entry.delete()
     return HttpResponse(json.dumps({}))
+
+def get_all_poke_info_by_pokedex_id(_: HttpRequest, pokedex_id) -> HttpResponse:
+    """
+    Retrieves all the pokemon information that a given pokedex knows
+    """
+    pokedex = get_object_or_404(Pokedex, pk=pokedex_id)
+    pokemon_info_ids = [entry.pokemon_info.national_num for entry in PokedexEntry.objects.filter(pokedex__id=pokedex.id)]
+
+    pokemon_info = PokemonInfo.objects.filter(national_num__in=pokemon_info_ids)
+    return HttpResponse(to_json(pokemon_info))
+
+def get_all_pokedex_by_pokemon_info_id(_: HttpRequest, national_num) -> HttpResponse:
+    """
+    Retrieves all the pokedexes that know about a pokemon info
+    """
+    pokemon_info = get_object_or_404(PokemonInfo, pk=national_num)
+    pokedex_ids = [entry.pokedex.id for entry in PokedexEntry.objects.filter(pokemon_info__national_num=pokemon_info.national_num)]
+
+    pokedexes = Pokedex.objects.filter(id__in=pokedex_ids)
+    return HttpResponse(to_json(pokedexes))

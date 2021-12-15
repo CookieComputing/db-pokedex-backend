@@ -27,4 +27,6 @@ urlpatterns = [
     path('pokedex/delete/<int:pokedex_id>/', views.delete_pokedex, name='delete_pokedex'),
     path('pokedex/associate/', views.associate_pokedex_with_pokemon_info, name='associate_pokedexes_with_pokemon_info'),
     path('pokedex/deassociate/', views.deassociate_pokedex_with_pokemon_info, name='deassociate_pokedexes_with_pokemon_info'),
+    path('pokedex/pokedex/<int:pokedex_id>/', views.get_all_poke_info_by_pokedex_id, name='get_all_poke_info_by_pokedex_id'),
+    path('pokedex/pokemon_info/<int:national_num>/', views.get_all_pokedex_by_pokemon_info_id, name='get_all_pokedex_by_pokemon_info_id')
 ]
