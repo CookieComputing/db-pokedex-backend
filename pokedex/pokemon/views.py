@@ -266,13 +266,23 @@ def delete_move(request: HttpRequest, move_id: int) -> HttpResponse:
     move.delete()
     return HttpResponse(json.dumps({}))
 
+def find_all_pokemon_info_by_move_id(_: HttpRequest, move_id: int) -> HttpResponse:
+    move_entries = MoveEntry.objects.filter(move__mid=move_id)
+    pids = set([entry.pokemon_info.national_num for entry in move_entries])
+
+    pokemon_info = PokemonInfo.objects.filter(national_num__in=pids)
+    return HttpResponse(to_json(pokemon_info))
+
 def find_all_pokemon_moves(_: HttpRequest) -> HttpResponse:
     pokemon_moves = MoveEntry.objects.all()
     return HttpResponse(to_json(pokemon_moves))
 
 def find_all_moves_by_pokemon_info_id(_: HttpRequest, poke_info_id: int) -> HttpResponse:
-    pokemon_moves = MoveEntry.objects.filter(pokemon_info__national_num=poke_info_id)
-    return HttpResponse(to_json(pokemon_moves))
+    move_entries = MoveEntry.objects.filter(pokemon_info__national_num=poke_info_id)
+    mids = set([entry.move.mid for entry in move_entries])
+    
+    moves = Moves.objects.filter(mid__in=mids)
+    return HttpResponse(to_json(moves))
 
 @csrf_exempt
 def associate_poke_info_with_move(request: HttpRequest) -> HttpResponse:
