@@ -26,8 +26,54 @@ def main():
         "email": "oak.g@husky.neu.edu",
         "date_of_birth": "1984-04-06T00:00:00Z"
     }
+
+    serena = {
+        "first_name": "Serena",
+        "last_name": "Haven",
+        "username": "shaven",
+        "password": "pkmnxy1357",
+        "email": "haven.s@husky.neu.edu",
+        "date_of_birth": "1999-10-24T00:00:00Z"
+    }
+
+    calem = {
+        "first_name": "Calem",
+        "last_name": "Brown",
+        "username": "cbrown",
+        "password": "pkmnyx246",
+        "email": "brown.c@husky.neu.edu",
+        "date_of_birth": "1908-03-15T00:00:00Z"
+    }
+
+    ethan = {
+        "first_name": "Ethan",
+        "last_name": "Hibiki",
+        "username": "hibikie",
+        "password": "goldandsilver000",
+        "email": "hibiki.e@husky.neu.edu",
+        "date_of_birth": "2000-04-18T00:00:00Z"
+    }
+
+    tim = {
+        "first_name": "Tim",
+        "last_name": "Goodman",
+        "username": "goodmane",
+        "password": "detectivepikapika1",
+        "email": "goodman.t@husky.neu.edu",
+        "date_of_birth": "1970-02-04T00:00:00Z"
+    }
+
+    may = {
+        "first_name": "May",
+        "last_name": "Haruka",
+        "username": "harukam",
+        "password": "pokerubi345",
+        "email": "harukam@husky.neu.edu",
+        "date_of_birth": "1998-12-25T00:00:00Z"
+    }
+
     trainer_path = common.format_path(common.DB_HOST, [common.TRAINER_PREFIX, common.CREATE])
-    for trainer in [ash, gary]:
+    for trainer in [ash, gary, serena, calem, ethan, tim, may]:
         common.assert_successful_create(trainer_path, trainer)
 
     # Create sample moves
@@ -52,8 +98,50 @@ def main():
         "element_type": "electric"
     }
 
+    taunt = {
+        "name": "Taunt",
+        "description": "The foe is taunted into a rage that allows it to use only attack moves for two to four turns.",
+        "move_type": "status",
+        "element_type": "dark"
+    }
+
+    fly = {
+        "name": "Fly",
+        "description": "The user will fly up high and become semi-invulnerable and inflicts damage the next turn.",
+        "move_type": "physical",
+        "element_type": "flying"
+    }
+
+    gust = {
+        "name": "Gust",
+        "description": "A gust of wind is whipped up by wings and launched at the foe to inflict damage.",
+        "move_type": "special",
+        "element_type": "flying"
+    }
+
+    psybeam = {
+        "name": "Psybeam",
+        "description": "Fires a peculiar ray that may confuse the foe.",
+        "move_type": "special",
+        "element_type": "flying"
+    }
+
+    water_gun = {
+        "name": "Water Gun",
+        "description": "Squirts water to attack.",
+        "move_type": "special",
+        "element_type": "water"
+    }
+
+    leech_life = {
+        "name": "Leech Life",
+        "description": "A blood-draining attack. The user's HP is restored by half the damage taken by the target.",
+        "move_type": "physical",
+        "element_type": "bug"
+    }
+
     move_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.MOVE_PREFIX, common.CREATE])
-    for move in [scratch, fire_punch, thunder_punch]:
+    for move in [scratch, fire_punch, thunder_punch, taunt, fly, gust, psybeam, water_gun, leech_life]:
         common.assert_successful_create(move_path, move)
 
     # Create sample pokemon info
@@ -108,8 +196,24 @@ def main():
         "type": "electric",
         "national_num": 25,
     }
+
+    bug_type = {
+        "type": "bug",
+        "national_num": 25,
+    }
+
+    water_type = {
+        "type": "water",
+        "national_num": 25,
+    }
+
+    fire_type = {
+        "type": "fire",
+        "national_num": 25,
+    }
+
     pokemon_types_path = common.format_path(common.DB_HOST, [common.POKEMON_PREFIX, common.POKEMON_TYPE_PREFIX, common.CREATE])
-    for type in [rock_type, ground_type, electric_type]:
+    for type in [rock_type, ground_type, electric_type, bug_type, water_type, fire_type]:
         common.assert_successful_create(pokemon_types_path, type)
 
     pikachu_knows_scratch = {
