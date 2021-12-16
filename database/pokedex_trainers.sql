@@ -31,7 +31,7 @@ CREATE TABLE `trainers` (
   `email` varchar(45) NOT NULL,
   `date_of_birth` datetime(6) NOT NULL,
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `trainers` (
 
 LOCK TABLES `trainers` WRITE;
 /*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
-INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','aketch','pikachu124','ketch.a@husky.neu.edu','2021-12-14 02:29:13.817125'),(2,'Gary','Oak','goak','garyoak123','oak.g@husky.neu.edu','2021-12-14 02:29:13.864875');
+INSERT INTO `trainers` VALUES (1,'Ash','Ketchum','aketch','pikachu124','ketch.a@husky.neu.edu','1984-05-22 00:00:00.000000'),(2,'Gary','Oak','goak','garyoak123','oak.g@husky.neu.edu','1984-04-06 00:00:00.000000'),(3,'Serena','Haven','shaven','pkmnxy1357','haven.s@husky.neu.edu','1999-10-24 00:00:00.000000'),(4,'Calem','Brown','cbrown','pkmnyx246','brown.c@husky.neu.edu','1908-03-15 00:00:00.000000'),(5,'Ethan','Hibiki','hibikie','goldandsilver000','hibiki.e@husky.neu.edu','2000-04-18 00:00:00.000000'),(6,'Tim','Goodman','goodmane','detectivepikapika1','goodman.t@husky.neu.edu','1970-02-04 00:00:00.000000'),(7,'May','Haruka','harukam','pokerubi345','harukam@husky.neu.edu','1998-12-25 00:00:00.000000');
 /*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 21:30:11
+-- Dump completed on 2021-12-16 14:22:35

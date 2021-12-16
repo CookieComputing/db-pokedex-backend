@@ -29,7 +29,7 @@ CREATE TABLE `moves` (
   `element_type` varchar(45) NOT NULL,
   `move_type` varchar(45) NOT NULL,
   PRIMARY KEY (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `moves` (
 
 LOCK TABLES `moves` WRITE;
 /*!40000 ALTER TABLE `moves` DISABLE KEYS */;
-INSERT INTO `moves` VALUES (1,'Scratch','A Normal-type attack. Sharp claws are used to inflict damage on the target.','normal','physical'),(2,'Fire Punch','A fiery punch. May cause a burn.','fire','physical'),(3,'Thunder Punch','An electric punch. It may paralyze.','electric','physical');
+INSERT INTO `moves` VALUES (1,'Scratch','A Normal-type attack. Sharp claws are used to inflict damage on the target.','normal','physical'),(2,'Fire Punch','A fiery punch. May cause a burn.','fire','physical'),(3,'Thunder Punch','An electric punch. It may paralyze.','electric','physical'),(4,'Taunt','The foe is taunted into a rage that allows it to use only attack moves for two to four turns.','dark','status'),(5,'Fly','The user will fly up high and become semi-invulnerable and inflicts damage the next turn.','flying','physical'),(6,'Gust','A gust of wind is whipped up by wings and launched at the foe to inflict damage.','flying','special'),(7,'Psybeam','Fires a peculiar ray that may confuse the foe.','flying','special'),(8,'Water Gun','Squirts water to attack.','water','special'),(9,'Leech Life','A blood-draining attack. The user\'s HP is restored by half the damage taken by the target.','bug','physical');
 /*!40000 ALTER TABLE `moves` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 21:30:14
+-- Dump completed on 2021-12-16 14:22:36

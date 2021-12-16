@@ -30,7 +30,7 @@ CREATE TABLE `pokemon_types` (
   UNIQUE KEY `pokemon_types_type_pokemon_info_id_fcdb0c87_uniq` (`type`,`pokemon_info_id`),
   KEY `pokemon_types_pokemon_info_id_11e4b436_fk_pokemon_i` (`pokemon_info_id`),
   CONSTRAINT `pokemon_types_pokemon_info_id_11e4b436_fk_pokemon_i` FOREIGN KEY (`pokemon_info_id`) REFERENCES `pokemon_info` (`national_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `pokemon_types` (
 
 LOCK TABLES `pokemon_types` WRITE;
 /*!40000 ALTER TABLE `pokemon_types` DISABLE KEYS */;
-INSERT INTO `pokemon_types` VALUES (3,'electric',25),(2,'ground',74),(1,'rock',74);
+INSERT INTO `pokemon_types` VALUES (4,'bug',25),(3,'electric',25),(6,'fire',25),(2,'ground',74),(1,'rock',74),(5,'water',25);
 /*!40000 ALTER TABLE `pokemon_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 21:30:11
+-- Dump completed on 2021-12-16 14:22:37
